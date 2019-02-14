@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/mLibUnit" />
             <option value="$PROJECT_DIR$/mfileutils" />
             <option value="$PROJECT_DIR$/mlog" />
+            <option value="$PROJECT_DIR$/mnetwork" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
