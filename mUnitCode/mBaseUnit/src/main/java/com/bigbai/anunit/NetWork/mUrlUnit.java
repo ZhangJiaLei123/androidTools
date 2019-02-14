@@ -1,7 +1,5 @@
 package com.bigbai.anunit.NetWork;
 
-import com.bigbai.anunit.NoticeUnit.Log;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;

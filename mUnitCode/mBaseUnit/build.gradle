@@ -63,6 +63,7 @@ dependencies {
     annotationProcessor 'com.arialyy.aria:aria-compiler:3.5.2'
 
     implementation 'com.liulishuo.filedownloader:library:1.7.5'
+    implementation project(path: ':mlog')
 }
 
 uploadArchives {

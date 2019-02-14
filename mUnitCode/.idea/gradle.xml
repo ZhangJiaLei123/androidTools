@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/mBaseUnit" />
             <option value="$PROJECT_DIR$/mLibUnit" />
+            <option value="$PROJECT_DIR$/mfileutils" />
             <option value="$PROJECT_DIR$/mlog" />
           </set>
         </option>

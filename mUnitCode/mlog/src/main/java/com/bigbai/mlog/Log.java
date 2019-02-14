@@ -12,19 +12,33 @@ import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class Log {
+/**
+ * 重写Log，添加自定义控制
+ * 简便的日志读写操作
+ */
+public class LOG {
+    /** 默认TAG */
     public static String TAG = "测试";
     /** 是否保存 */
     public static boolean isSave = true;
     /** 保存路径*/
     public static String LogPath = "日志.log";
 
+    /** 是否允许输出显示日志 */
     public static Boolean isLog = true;
+    /** 是否允许输出显示信息 */
     public static Boolean isInfo = true;
+    /** 是否允许输出显示调试 */
     public static Boolean isDebug = true;
+    /** 是否允许输出显示错误 */
     public static Boolean isError = true;
+    /** 是否允许输出显示警告 */
     public static Boolean isWarning = true;
 
+    /**
+     * 信息
+     * @param mag
+     */
     public static void i(String TAG,String mag)
     {
         if(isInfo && isLog){
@@ -37,6 +51,10 @@ public class Log {
 
     }
 
+    /**
+     * 信息
+     * @param mag
+     */
     public static void i(String mag)
     {
         if(isInfo && isLog && mag!= null){
@@ -45,6 +63,10 @@ public class Log {
 
     }
 
+    /**
+     * 调试
+     * @param mag
+     */
     public static void d(String TAG,String mag)
     {
         if(isDebug && isLog){
@@ -57,12 +79,20 @@ public class Log {
 
     }
 
+    /**
+     * 调试
+     * @param mag
+     */
     public static void d(String mag)
     {
         if(isDebug && isLog)
             d(TAG,mag);
     }
 
+    /**
+     * 错误
+     * @param mag
+     */
     public static void e(String TAG,String mag)
     {
         if(isError && isLog){
@@ -74,12 +104,20 @@ public class Log {
 
     }
 
+    /**
+     * 错误
+     * @param mag
+     */
     public static void e(String mag)
     {
         if(isError && isLog)
             e(TAG,mag);
     }
 
+    /**
+     * 警告
+     * @param mag
+     */
     public static void w(String TAG,String mag)
     {
         if(isWarning && isLog){
@@ -91,12 +129,20 @@ public class Log {
 
     }
 
+    /**
+     * 警告
+     * @param mag
+     */
     public static void w(String mag)
     {
         if(isWarning && isLog)
             w(TAG,mag);
     }
 
+    /**
+     * 获取log文件
+     * @return
+     */
     public static String getLog(){
         try {
             String name = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + LogPath;
@@ -107,7 +153,9 @@ public class Log {
         return "null";
     }
 
-
+    /**
+     * 保存日志到SD卡
+     * */
     private static void writeLog(String msg,String model){
         Calendar cal;
         cal = Calendar.getInstance();
@@ -131,13 +179,14 @@ public class Log {
 
     }
 
+    /**
+     * 清除日志文件
+     * */
     public static void clearLog(){
         writeBySd(LogPath,"",false);
 
     }
-    public  static boolean writeBySd(String filename, String filecontent) {
-        return writeBySd(filename,filecontent,false);
-    }
+
     /**
      * 文件写入到 Sd 卡根目录
      * @param filename

@@ -3,10 +3,11 @@ package com.bigbai.anunit.mFileUnit;
 import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
-import android.util.Log;
+
+
+import com.bigbai.mlog.LOG;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +15,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
 /** 
  * 文件操作工具包
@@ -146,7 +146,7 @@ public class FileUtils
 		//如果path是传递过来的参数，可以做一个非目录的判断
 		if (file.isDirectory())
 		{
-			com.bigbai.anunit.NoticeUnit.Log.d("测试", "The File doesn't not exist.");
+			LOG.d("测试", "The File doesn't not exist.");
 		}
 		else
 		{
@@ -166,11 +166,11 @@ public class FileUtils
 			}
 			catch (java.io.FileNotFoundException e)
 			{
-				com.bigbai.anunit.NoticeUnit.Log.d("测试", "The File doesn't not exist.");
+				LOG.d("测试", "The File doesn't not exist.");
 			}
 			catch (IOException e)
 			{
-				com.bigbai.anunit.NoticeUnit.Log.d("测试", "error:" + e.getMessage());
+				LOG.d("测试", "error:" + e.getMessage());
 			}
 		}
 		return content;
@@ -195,7 +195,7 @@ public class FileUtils
 		} 
 		catch (IOException e)
 		{
-		   Log.i("FileTest", e.getMessage()); 
+		   LOG.i("FileTest", e.getMessage());
 		}
 		return null;
 	}
@@ -519,7 +519,7 @@ public class FileUtils
 						deletedFile.delete();
 					}
 					newPath.delete();
-					Log.i("DirectoryManager", fileName);
+					LOG.i("DirectoryManager", fileName);
 					status = true;
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -548,7 +548,7 @@ public class FileUtils
 			checker.checkDelete(newPath.toString());
 			if (newPath.isFile()) {
 				try {
-					Log.i("DirectoryManager", fileName);
+					LOG.i("DirectoryManager", fileName);
 					newPath.delete();
 					status = true;
 				} catch (SecurityException se) {

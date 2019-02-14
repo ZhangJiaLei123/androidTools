@@ -7,8 +7,6 @@ import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bigbai.anunit.NoticeUnit.Log;
-
 
 @SuppressLint("AppCompatCustomView")
 public class testView extends TextView {

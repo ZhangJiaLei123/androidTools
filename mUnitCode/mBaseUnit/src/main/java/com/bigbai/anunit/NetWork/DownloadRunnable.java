@@ -1,23 +1,11 @@
 package com.bigbai.anunit.NetWork;
 
-import android.app.DownloadManager;
-import android.content.Context;
-import android.net.Uri;
-
-import com.bigbai.anunit.NoticeUnit.Log;
-
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.List;
 
 /**
  * 下载线程
