@@ -1,5 +1,7 @@
 package com.bigbai.anunit.NetWork;
 
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;

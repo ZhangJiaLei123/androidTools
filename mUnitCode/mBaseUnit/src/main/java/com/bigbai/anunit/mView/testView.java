@@ -64,7 +64,7 @@ public class testView extends TextView {
     public void moveAddX(int x){
      //   if (mLastx != -1)
        // {
-            Log.i("移动x");
+           // Log.i("移动x");
             RelativeLayout.LayoutParams linearParams = (RelativeLayout.LayoutParams)this.getLayoutParams();
             linearParams.leftMargin +=(x);
             this.setLayoutParams(linearParams);

@@ -1,5 +1,7 @@
 package com.bigbai.anunit.NetWork;
 
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -98,7 +100,7 @@ public class DownloadRunnable  implements Runnable {
                     info.setContentLen(Long.parseLong(lstr));
                 }
                 else
-                    Log.i("content-length = " + lstr);
+                    Log.i("下载器","content-length = " + lstr);
 
             } else {//否则设置请求属性，请求制定范围的文件流
                 conn.setRequestProperty("Range", "bytes=" + info.getCompletedLen() + "-" + info.getContentLen());
@@ -114,15 +116,15 @@ public class DownloadRunnable  implements Runnable {
                 info.setCompletedLen(info.getCompletedLen() + len);
             }
             if (len == -1) {//如果读取到文件末尾则下载完成
-                Log.i("DownloadRunnable", "下载完了");
+                Log.i("下载器", "下载完了");
                 bis.close();
                 raf.close();
             } else {//否则下载系手动停止
-                Log.i("DownloadRunnable", "下载停止了");
+                Log.i("下载器", "下载停止了");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.i(e.toString());
+            Log.i("下载错误",e.toString());
         }
     }
 
