@@ -55,7 +55,7 @@ public class FileUtils
 
 
 	public  static boolean writeBySd(String filename, String filecontent) {
-		return writeBySd(filename,filecontent);
+		return writeBySd(filename,filecontent,false);
 	}
 	/**
 	 * 文件写入到 Sd 卡根目录

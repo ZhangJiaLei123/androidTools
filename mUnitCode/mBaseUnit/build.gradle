@@ -1,5 +1,6 @@
 apply plugin: 'maven'
 apply plugin: 'com.android.library'
+// 构建 gradlew :mBaseUnit2:uploadArchives
 /****
  *
  * 使用方法：
@@ -66,7 +67,7 @@ dependencies {
 
 uploadArchives {
     repositories.mavenDeployer {
-        def mavenDirPath = file('E:\\MyComputer\\Documents\\workSpace\\Android\\library\\testLib')
+        def mavenDirPath = file('E:\\MyComputer\\Documents\\workSpace\\Android\\library\\mMavenModule')
         repository(url: "file://${mavenDirPath.absolutePath}")
         pom.project {
             groupId "com.bigbai.anunit"

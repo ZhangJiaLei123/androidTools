@@ -21,6 +21,11 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+        maven {
+            url "https://raw.githubusercontent.com/ZhangJiaLei123/androidTools/master"
+        }
+        
     }
 }
 

@@ -1,2 +1,2 @@
-include ':app', ':mLibUnit', ':mBaseUnit2'
+include ':app', ':mLibUnit', ':mBaseUnit2', ':mlog'
 project(':mBaseUnit2').projectDir = new File('mBaseUnit')
