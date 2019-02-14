@@ -1,49 +1,49 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
+ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
 	package
-		ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:2:5-32
-		INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
-		INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
+		ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:2:5-32
+		INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
+		INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
-		ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
-		INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
+		INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
+		ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
+		INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
 	android:versionCode
-		INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
-		ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
-		INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
+		INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
+		ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:1:1-9:12
+		INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:1:11-69
+		ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:1:11-69
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:5:5-80
+ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:5:5-80
 	android:name
-		ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:5:22-78
+		ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:5:22-78
 uses-permission#android.permission.INTERNET
-ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:6:5-67
+ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:6:5-67
 	android:name
-		ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:6:22-64
+		ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:6:22-64
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:7:5-79
+ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:7:5-79
 	android:name
-		ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml:7:22-76
+		ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml:7:22-76
 uses-sdk
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
-INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
+INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
-		ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
-		INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
+		INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
+		ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
+		INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
-		ADDED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
-		INJECTED from E:\MyComputer\Documents\workSpace\Android\anunit\mBaseUnit\src\main\AndroidManifest.xml
+		INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
+		ADDED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml
+		INJECTED from E:\MyComputer\Documents\workSpace\Android\library\mMavenModule\mUnitCode\mBaseUnit\src\main\AndroidManifest.xml

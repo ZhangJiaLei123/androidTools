@@ -11,7 +11,7 @@ apply plugin: 'com.android.library'
          jcenter()
         。。。
          maven {
-            url "https://raw.githubusercontent.com/ZhangJiaLei123/anunit/master"
+            url "https://raw.githubusercontent.com/ZhangJiaLei123/androidTools/master"
          }
         。。。
      }
