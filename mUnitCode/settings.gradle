@@ -1,0 +1,2 @@
+include ':app', ':mLibUnit', ':mBaseUnit2'
+project(':mBaseUnit2').projectDir = new File('mBaseUnit')

@@ -1,0 +1,77 @@
+apply plugin: 'maven'
+apply plugin: 'com.android.library'
+/****
+ *
+ * 使用方法：
+ 在 项目根build中添加
+ 1.
+ allprojects {
+     repositories {
+         google()
+         jcenter()
+        。。。
+         maven {
+            url "https://raw.githubusercontent.com/ZhangJiaLei123/anunit/master"
+         }
+        。。。
+     }
+ }
+ 2. 在需要导入依赖的build中，添加
+
+    implementation 'com.bigbai.anunit:anunit:1.0.0'
+
+ */
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 10054
+        versionName "1.12"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // http协议
+    implementation files('libs/httpclient-cache-4.2.5.jar')
+
+    // LFilePicker 文件选择器
+    implementation 'com.leon:lfilepickerlibrary:1.0'
+
+    // 文件下载
+    implementation 'com.arialyy.aria:aria-core:3.5.2'
+    annotationProcessor 'com.arialyy.aria:aria-compiler:3.5.2'
+
+    implementation 'com.liulishuo.filedownloader:library:1.7.5'
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        def mavenDirPath = file('E:\\MyComputer\\Documents\\workSpace\\Android\\library\\testLib')
+        repository(url: "file://${mavenDirPath.absolutePath}")
+        pom.project {
+            groupId "com.bigbai.anunit"
+            artifactId "anunit"
+            version "1.0.0"
+        }
+    }
+}
