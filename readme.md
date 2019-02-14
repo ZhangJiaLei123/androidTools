@@ -17,10 +17,10 @@
  }
  ```
 
-@import "./DocImg/导入步骤1.png"
+![导入步骤1](https://github.com/ZhangJiaLei123/Picture-bed/blob/master/%E5%AF%BC%E5%85%A5%E6%AD%A5%E9%AA%A41.png?raw=true)
 
  1.2 在需要导入依赖的build中，添加
 ```
     implementation 'com.bigbai.anunit:anunit:1.0.0'
 ```
-@import "./DocImg/导入步骤2.png"
+![导入步骤2](https://github.com/ZhangJiaLei123/Picture-bed/blob/master/%E5%AF%BC%E5%85%A5%E6%AD%A5%E9%AA%A42.png?raw=true)
