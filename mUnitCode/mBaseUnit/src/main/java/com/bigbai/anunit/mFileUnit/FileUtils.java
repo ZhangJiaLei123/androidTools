@@ -3,9 +3,7 @@ package com.bigbai.anunit.mFileUnit;
 import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
-
-
-import com.bigbai.mlog.LOG;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -24,6 +22,7 @@ import java.io.InputStreamReader;
  */
 public class FileUtils 
 {
+	static String TAG = "文件操作";
     public static String getPATH() {
         return PATH;
     }
@@ -146,7 +145,7 @@ public class FileUtils
 		//如果path是传递过来的参数，可以做一个非目录的判断
 		if (file.isDirectory())
 		{
-			LOG.d("测试", "The File doesn't not exist.");
+			Log.d(TAG, "The File doesn't not exist.");
 		}
 		else
 		{
@@ -166,11 +165,11 @@ public class FileUtils
 			}
 			catch (java.io.FileNotFoundException e)
 			{
-				LOG.d("测试", "The File doesn't not exist.");
+				Log.d(TAG,  "The File doesn't not exist.");
 			}
 			catch (IOException e)
 			{
-				LOG.d("测试", "error:" + e.getMessage());
+				Log.d(TAG,  "error:" + e.getMessage());
 			}
 		}
 		return content;
@@ -195,7 +194,7 @@ public class FileUtils
 		} 
 		catch (IOException e)
 		{
-		   LOG.i("FileTest", e.getMessage());
+			Log.d(TAG,  e.getMessage());
 		}
 		return null;
 	}
@@ -519,7 +518,7 @@ public class FileUtils
 						deletedFile.delete();
 					}
 					newPath.delete();
-					LOG.i("DirectoryManager", fileName);
+					Log.d(TAG, "DirectoryManager"+ fileName);
 					status = true;
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -548,7 +547,7 @@ public class FileUtils
 			checker.checkDelete(newPath.toString());
 			if (newPath.isFile()) {
 				try {
-					LOG.i("DirectoryManager", fileName);
+					Log.d(TAG,  "删除文件" + fileName);
 					newPath.delete();
 					status = true;
 				} catch (SecurityException se) {

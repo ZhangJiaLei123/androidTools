@@ -64,6 +64,7 @@ dependencies {
 
     implementation 'com.liulishuo.filedownloader:library:1.7.5'
     implementation project(path: ':mlog')
+
 }
 
 uploadArchives {
