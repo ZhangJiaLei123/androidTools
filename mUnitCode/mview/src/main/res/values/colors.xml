@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorNull">#00ffffff</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorblack">#020202</color>
+
+    <color name="colorPopuMenuBackground">#d6fdfdfd</color>
+    <color name="colorPopuMenuBorder">#d6fdfdfd</color>
+
 </resources>
