@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/mBaseUnit" />
             <option value="$PROJECT_DIR$/mLibUnit" />
             <option value="$PROJECT_DIR$/mfileutils" />
+            <option value="$PROJECT_DIR$/mimage" />
             <option value="$PROJECT_DIR$/mlog" />
             <option value="$PROJECT_DIR$/mnetwork" />
             <option value="$PROJECT_DIR$/mnoticeunit" />
