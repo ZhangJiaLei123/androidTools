@@ -1,2 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bigbai.msystem" />
+    package="com.bigbai.msystem" >
+
+    <!--文件读写-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--网络-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--允许程序访问Wi-Fi网络状态信息-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+
+
+    <!--震动-->
+    <uses-permission android:name="android.permission.VIBRATE "/>
+
+
+
+</manifest>
