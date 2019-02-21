@@ -7,8 +7,8 @@ import java.util.TimeZone;
  * 时间工具
  */
 public class CalendarUnit {
-    static final int onelyTime = 0;
-    static final int onelyDate = 2;
+    public static final int onelyTime = 0;
+    public static final int onelyDate = 2;
 
 
     public static String getTime(int Model){
