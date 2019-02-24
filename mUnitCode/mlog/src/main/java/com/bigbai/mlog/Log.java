@@ -20,7 +20,7 @@ public class LOG {
     /** 默认TAG */
     public static String TAG = "测试";
     /** 是否保存 */
-    public static boolean isSave = true;
+    public static boolean isSave = false;
     /** 保存路径*/
     public static String LogPath = "日志.log";
 
