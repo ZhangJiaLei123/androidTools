@@ -18,7 +18,7 @@ import java.util.TimeZone;
  */
 public class LOG {
     /** 默认TAG */
-    public static String TAG = "测试";
+    public static String TAG = "com.bigbai.mlog.LOG";
     /** 是否保存 */
     public static boolean isSave = false;
     /** 保存路径*/
@@ -43,10 +43,7 @@ public class LOG {
     {
         if(isInfo && isLog){
             android.util.Log.i(TAG, "" + mag);
-            if(isSave){
-                writeLog(TAG + "" + mag ,"INFO");
-              //  FileUtils.writeBySd(LogPath,TAG + "" + mag + "\n",true);
-            }
+            writeLog(TAG + "" + mag ,"INFO");
         }
 
     }
@@ -71,10 +68,7 @@ public class LOG {
     {
         if(isDebug && isLog){
             android.util.Log.d(TAG,mag);
-            if(isSave){
-                writeLog(TAG + "" + mag ,"DEBUG");
-               // FileUtils.writeBySd(LogPath,TAG + "" + mag + "\n",true);
-            }
+            writeLog(TAG + "" + mag ,"DEBUG");
         }
 
     }
@@ -97,9 +91,7 @@ public class LOG {
     {
         if(isError && isLog){
             android.util.Log.e(TAG,mag);
-            if(isSave){
-                writeLog(TAG + "" + mag ,"ERROR");
-            }
+            writeLog(TAG + "" + mag ,"ERROR");
         }
 
     }
@@ -122,9 +114,7 @@ public class LOG {
     {
         if(isWarning && isLog){
             android.util.Log.w(TAG,mag);
-            if(isSave){
-                writeLog(TAG + "" + mag ,"WARNING");
-            }
+            writeLog(TAG + "" + mag ,"WARNING");
         }
 
     }
@@ -157,6 +147,11 @@ public class LOG {
      * 保存日志到SD卡
      * */
     private static void writeLog(String msg,String model){
+
+        if (!isSave){
+            return;
+        }
+
         Calendar cal;
         cal = Calendar.getInstance();
         cal.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
@@ -204,17 +199,17 @@ public class LOG {
                 output.write(filecontent.getBytes());
                 //将String字符串以字节流的形式写入到输出流中
                 output.close();
-                LogPath = filename; // 保存路径到缓存
+               // LogPath = filename; // 保存路径到缓存
                 //关闭输出流
                 return true;
             }
         }catch (Exception e){
             LogPath = null;
+            d(TAG, "写入日志失败:路径为空");
             return false;
         }
         LogPath = null;
         return false;
-
     }
 
     /**
@@ -231,7 +226,7 @@ public class LOG {
         //如果path是传递过来的参数，可以做一个非目录的判断
         if (file.isDirectory())
         {
-            d("测试", "The File doesn't not exist.");
+            d(TAG, "The File doesn't not exist.");
         }
         else
         {
@@ -251,11 +246,11 @@ public class LOG {
             }
             catch (java.io.FileNotFoundException e)
             {
-                d("测试", "The File doesn't not exist.");
+                d(TAG, "The File doesn't not exist.");
             }
             catch (IOException e)
             {
-                d("测试", "error:" + e.getMessage());
+                d(TAG, "error:" + e.getMessage());
             }
         }
         return content;
