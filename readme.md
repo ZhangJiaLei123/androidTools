@@ -56,6 +56,11 @@ String logStr = LOG.getLog();   // 获取日志文件
 LOG.clearLog();                 // 清除日志文件
 ```
 
+* 显示日志对话框，并进行简单操作
+```
+LOG.showLogDialog(Content);
+```
+
 ### 2、网络模块
 
 * 请添加网络权限
