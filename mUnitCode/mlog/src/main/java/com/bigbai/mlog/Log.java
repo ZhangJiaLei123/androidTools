@@ -283,17 +283,34 @@ public class LOG {
      * @param context
      */
     public static void showLogDialog(Context context){
+        String log = ReadTxtFile(LogPath);
+
         //创建一个对话框对象
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         //对对话框内容进行定义
         builder.setTitle("日志");
-        builder.setMessage(ReadTxtFile(LogPath));
+        builder.setMessage(log);
         //定义对话框内容的点击事件,注意后面还有个show，否则不会显示对话框
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener(){
             @Override
             //定义点击对话框按钮后执行的动作，这里是添加一个textview的内容
             public void onClick(DialogInterface dialog, int which) {
 
+            }
+        }).show();
+        builder.setNegativeButton("删除", new DialogInterface.OnClickListener(){
+            @Override
+            //定义点击对话框按钮后执行的动作，这里是添加一个textview的内容
+            public void onClick(DialogInterface dialog, int which) {
+                clearLog();
+            }
+        }).show();
+
+        builder.setNeutralButton("发送", new DialogInterface.OnClickListener(){
+            @Override
+            //定义点击对话框按钮后执行的动作，这里是添加一个textview的内容
+            public void onClick(DialogInterface dialog, int which) {
+                // 发送日志到邮箱
             }
         }).show();
     }
