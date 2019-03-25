@@ -1,5 +1,8 @@
 package com.bigbai.mlog;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Environment;
 
 import java.io.BufferedReader;
@@ -18,11 +21,24 @@ import java.util.TimeZone;
  */
 public class LOG {
     /** 默认TAG */
-    public static String TAG = "com.bigbai.mlog.LOG";
+    public static String TAG = "测试";
     /** 是否保存 */
     public static boolean isSave = false;
+    /** SD*/
+    public static String SDPath;
+
+    static {
+        try {
+            SDPath = Environment.getExternalStorageDirectory().getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
     /** 保存路径*/
     public static String LogPath = "日志.log";
+
 
     /** 是否允许输出显示日志 */
     public static Boolean isLog = true;
@@ -79,8 +95,9 @@ public class LOG {
      */
     public static void d(String mag)
     {
-        if(isDebug && isLog)
-            d(TAG,mag);
+        if(isDebug && isLog) {
+            d(TAG, mag);
+        }
     }
 
     /**
@@ -102,8 +119,10 @@ public class LOG {
      */
     public static void e(String mag)
     {
-        if(isError && isLog)
+        if(isError && isLog){
             e(TAG,mag);
+        }
+
     }
 
     /**
@@ -125,8 +144,9 @@ public class LOG {
      */
     public static void w(String mag)
     {
-        if(isWarning && isLog)
-            w(TAG,mag);
+        if(isWarning && isLog) {
+            w(TAG, mag);
+        }
     }
 
     /**
@@ -160,10 +180,12 @@ public class LOG {
         String year = String.valueOf(cal.get(Calendar.YEAR));
         String month = String.valueOf(cal.get(Calendar.MONTH))+1;
         String day = String.valueOf(cal.get(Calendar.DATE));
-        if (cal.get(Calendar.AM_PM) == 0)
+        if (cal.get(Calendar.AM_PM) == 0) {
             hour = String.valueOf(cal.get(Calendar.HOUR));
-        else
-            hour = String.valueOf(cal.get(Calendar.HOUR)+12);
+        }
+        else {
+            hour = String.valueOf(cal.get(Calendar.HOUR) + 12);
+        }
         String minute = String.valueOf(cal.get(Calendar.MINUTE));
         String second = String.valueOf(cal.get(Calendar.SECOND));
 
@@ -193,7 +215,7 @@ public class LOG {
         try {
             //如果手机已插入sd卡,且app具有读写sd卡的权限
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                filename = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + filename;
+                filename = SDPath + "/" + filename;
                 //这里就不要用openFileOutput了,那个是往手机内存中写数据的
                 FileOutputStream output = new FileOutputStream(filename,isAdd);
                 output.write(filecontent.getBytes());
@@ -217,9 +239,9 @@ public class LOG {
      * @param strFilePath
      * @return
      */
-    public static String ReadTxtFile(String strFilePath)
-    {
-        String path = strFilePath;
+    public static String ReadTxtFile(String strFilePath) {
+
+        String path = SDPath + "/" + strFilePath;
         String content = ""; //文件内容字符串
         //打开文件
         File file = new File(path);
@@ -254,6 +276,26 @@ public class LOG {
             }
         }
         return content;
+    }
+
+    /**
+     * 在对话框中显示日志
+     * @param context
+     */
+    public static void showLogDialog(Context context){
+        //创建一个对话框对象
+        AlertDialog.Builder builder=new AlertDialog.Builder(context);
+        //对对话框内容进行定义
+        builder.setTitle("日志");
+        builder.setMessage(ReadTxtFile(LogPath));
+        //定义对话框内容的点击事件,注意后面还有个show，否则不会显示对话框
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+            @Override
+            //定义点击对话框按钮后执行的动作，这里是添加一个textview的内容
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).show();
     }
 
 }
