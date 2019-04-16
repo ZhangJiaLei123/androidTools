@@ -1,2 +1,2 @@
-include ':app', ':mLibUnit', ':mBaseUnit2', ':mlog', ':mfileutils', ':mnetwork', ':mview', ':mnoticeunit', ':mimage', ':mSystem', ':mTimeUnit', ':mStringUnit'
+include ':app', ':mLibUnit', ':mBaseUnit2', ':mlog', ':mfileutils', ':mnetwork', ':mview', ':mnoticeunit', ':mimage', ':mSystem', ':mTimeUnit', ':mStringUnit', ':awelcome'
 project(':mBaseUnit2').projectDir = new File('mBaseUnit')

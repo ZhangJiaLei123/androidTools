@@ -132,6 +132,57 @@ public class FileUtils
 	}
 
 	/**
+	 * 从sd卡更目录开始读
+	 * @param strFilePath
+	 * @return
+	 */
+	public static String ReadFromSD(String strFilePath)
+	{
+		String path = strFilePath;
+		String content = ""; //文件内容字符串
+		//打开文件
+		try {
+			path = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + path;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		File file = new File(path);
+		//如果path是传递过来的参数，可以做一个非目录的判断
+		if (file.isDirectory())
+		{
+			Log.d(TAG, "The File doesn't not exist.");
+		}
+		else
+		{
+			try {
+				InputStream instream = new FileInputStream(file);
+				if (instream != null)
+				{
+					InputStreamReader inputreader = new InputStreamReader(instream);
+					BufferedReader buffreader = new BufferedReader(inputreader);
+					String line;
+					//分行读取
+					while (( line = buffreader.readLine()) != null) {
+						content += line + "\n";
+					}
+					instream.close();
+				}
+			}
+			catch (java.io.FileNotFoundException e)
+			{
+				Log.d(TAG,  "The File doesn't not exist.");
+			}
+			catch (IOException e)
+			{
+				Log.d(TAG,  "error:" + e.getMessage());
+			}
+		}
+		return content;
+	}
+
+
+
+	/**
 	 * 读
 	 * @param strFilePath
 	 * @return
