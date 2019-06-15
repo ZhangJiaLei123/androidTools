@@ -18,7 +18,7 @@ public class MWindow {
      * @param context
      * @return
     */
-     private int getBrightness(Context context) {
+     public static int getBrightness(Context context) {
         int systemBrightness = 0;
         try {
                 systemBrightness = Settings.System.getInt(context.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
@@ -33,7 +33,7 @@ public class MWindow {
      * @param activity
      * @param brightness
      */
-    public void setBrightness(Activity activity, int brightness) {
+    public static void setBrightness(Activity activity, int brightness) {
         Window window = activity.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
         if (brightness == -1) {
