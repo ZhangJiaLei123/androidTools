@@ -140,13 +140,12 @@ public class CommitButton extends View {
         this.text = text;
     }
 
-    public CommitButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
     public CommitButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(attrs);
+    }
 
+    public void init(AttributeSet attrs){
         AttributeHelper attributeHelper = new AttributeHelper(getContext(), attrs);
         text = attributeHelper.getString("text", text);
         textEnd = attributeHelper.getString("tag", textEnd);
