@@ -23,7 +23,6 @@ public class CommitButton extends View {
     private static int Text_Size = 30;
     private static int Text_Size_Touch = 25;
     private static int Round = 30;
-    private static String Text = "提交";
 
     private Mode mode = Mode.Auto_Finish;
     private int maxWidth;
@@ -36,7 +35,7 @@ public class CommitButton extends View {
     private int textSize = Text_Size;
     private int textSizeTouch = Text_Size_Touch;
     private int round = Round;
-    private String text = Text;
+    private String text = "开始";
     public String textEnd = "√";
     //是否停止进度条，由外界设置
     private boolean isProgressStop = false;
@@ -153,7 +152,7 @@ public class CommitButton extends View {
         super(context, attrs, defStyleAttr);
 
         AttributeHelper attributeHelper = new AttributeHelper(getContext(), attrs);
-        Text = attributeHelper.getString("text", "开始");
+        text = attributeHelper.getString("text", text);
         textEnd = attributeHelper.getString("tag", textEnd);
     }
 
