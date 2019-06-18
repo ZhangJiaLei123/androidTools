@@ -16,6 +16,15 @@ import java.io.File;
  */
 public class AppInfo {
 
+    /**
+     * 获取包名
+     * @param context
+     * @return
+     */
+    public static String getPackageName(Context context){
+       return context.getPackageName();
+    }
+
     // 获取版本号
     public static int getVersionCode(Context context){
        // String version;

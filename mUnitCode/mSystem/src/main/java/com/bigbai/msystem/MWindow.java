@@ -8,6 +8,7 @@ import android.view.WindowManager;
 
 /**
  * @brief：屏幕工具
+ * 设置屏幕亮度
  * @author: Zhang
  * @date: 2019/6/15 - 16:12
  * @note Created by PACKAGE_NAME.

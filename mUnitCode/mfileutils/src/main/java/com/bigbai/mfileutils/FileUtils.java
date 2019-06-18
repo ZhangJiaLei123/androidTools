@@ -3,16 +3,20 @@ package com.bigbai.mfileutils;
 import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 /** 
  * 文件操作工具包
@@ -22,6 +26,7 @@ import java.io.InputStreamReader;
  */
 public class FileUtils 
 {
+	private static int length;
 	static String TAG = "文件操作";
     public static String getPATH() {
         return PATH;
@@ -35,7 +40,7 @@ public class FileUtils
 	 */
 	public static String write(Context context, String fileName, String content)
 	{ 
-		if( content == null )	content = "";
+		if( content == null )	{content = "";}
 		
 		try 
 		{
@@ -316,7 +321,9 @@ public class FileUtils
 	 */
 	public static String getFileName( String filePath )
 	{
-		if( filePath.isEmpty() )	return "";
+		if( filePath.isEmpty() )	{
+			return "";
+		}
 		return filePath.substring( filePath.lastIndexOf( File.separator )+1 );
 	}
 	/**
@@ -339,7 +346,9 @@ public class FileUtils
 	 */
 	public static String getFileFormat( String fileName )
 	{
-		if( fileName.isEmpty() )	return "";
+		if( fileName.isEmpty() )	{
+			return "";
+		}
 		
 		int point = fileName.lastIndexOf( '.' );
 		return fileName.substring( point+1 );
@@ -369,7 +378,9 @@ public class FileUtils
 	 */
 	public static String getFileSize(long size) 
 	{
-		if (size <= 0)	return "0";
+		if (size <= 0)	{
+			return "0";
+		}
 		java.text.DecimalFormat df = new java.text.DecimalFormat("##.##");
 		float temp = (float)size / 1024;
 		if (temp >= 1024) 
@@ -443,7 +454,99 @@ public class FileUtils
         }
         return count;  
     }
-	
+
+
+	/**
+	 * 写字节
+	 * Write byte.
+	 *
+	 * @param path    the path
+	 * @param content the content
+	 * @throws IOException the io exception
+	 */
+	public static boolean writeByte(@NonNull String path, @NonNull String content) {
+		return writeByte(new File(path), content);
+	}
+
+	/**
+	 * 写字节
+	 * Write byte.
+	 *
+	 * @param file    the file
+	 * @param content the content
+	 * @throws IOException the io exception
+	 */
+	public static boolean writeByte(@NonNull File file, @NonNull String content) {
+		if (file.isDirectory()) {
+			return false;
+		}
+		if (!file.exists()) {
+			try {
+
+				if(!file.getParentFile().exists()){
+					file.getParentFile().mkdir();
+				}
+
+				file = new File(file.getParentFile(),file.getName());
+
+				file.createNewFile();
+
+				if (!file.exists()){
+					return false;
+				}
+			} catch (Exception e) {
+			}
+		}
+		OutputStream out = null;
+		try { // FileOutputStream
+			out = new FileOutputStream(file);
+			byte[] b = content.getBytes();
+			out.write(b);
+			out.close();
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			CloseableClose(out);
+		}
+	}
+
+	/**
+	 * 追加
+	 * Add byte.
+	 *
+	 * @param fileName the file
+	 * @param content  the content
+	 */
+	public static boolean addByte(@NonNull File fileName, @NonNull String content) {
+		if (!fileName.isFile()) {
+			return false;
+		}
+
+		OutputStream out = null;
+		try {
+			if(!fileName.exists()){
+				fileName.createNewFile();
+			}
+			out = new FileOutputStream(fileName, true);
+			byte[] b = content.getBytes();
+			for (int i = 0; i < b.length; i++) {
+				out.write(b[i]);
+			}
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			return false;
+		} finally {
+			CloseableClose(out);
+		}
+	}
+
 	public static byte[] toBytes(InputStream in) throws IOException 
 	{
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -456,7 +559,97 @@ public class FileUtils
 	    out.close();
 	    return buffer;
 	}
-	
+
+	/**
+	 * 读取文件，一次性读取
+	 * Read file string.
+	 *
+	 * @param file the file
+	 * @return the string
+	 */
+	public static String readFile(@NonNull File file) {
+
+		if (!file.isFile()) {
+			return "";
+		}
+		if(file.exists()){
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		Long filelength = file.length();     //获取文件长度
+		if (filelength > Integer.MAX_VALUE) {
+			return readFileByLines(file);
+		}
+		byte[] filecontent = new byte[filelength.intValue()];
+		FileInputStream in = null;
+		try {
+			in = new FileInputStream(file);
+			in.read(filecontent);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+		} finally {
+			CloseableClose(in);
+		}
+		return new String(filecontent);
+	}
+
+	/**
+	 * 按行读取
+	 * Read file by lines string.
+	 *
+	 * @param file the file
+	 * @return the string
+	 */
+	public static String readFileByLines(@NonNull File file) {
+		if (!file.isFile()) {
+			return "";
+		}
+		BufferedReader reader = null;
+		StringBuilder builder = new StringBuilder();
+		try {
+			reader = new BufferedReader(new FileReader(file));
+			String tempString;
+			while ((tempString = reader.readLine()) != null) {
+				builder.append(tempString);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+		} finally {
+			CloseableClose(reader);
+		}
+
+		return builder.toString();
+	}
+	public static String readFileFromAssets(Context context,@NonNull String fileName) {
+
+		String strRes = "";
+		InputStreamReader in = null;
+		try {
+			in = new InputStreamReader(context.getAssets().open(fileName));
+			BufferedReader bufferedReader = new BufferedReader(in);
+			String line = "";
+			while ((line = bufferedReader.readLine()) != null){
+				strRes += line + "\n";
+			}
+			bufferedReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+		} finally {
+			try {
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return strRes;
+	}
+
 	/**
 	 * 检查文件是否存在
 	 * @param name
@@ -510,8 +703,9 @@ public class FileUtils
 			File newPath = new File(path.toString() + directoryName);
 			status = newPath.mkdir();
 			status = true;
-		} else
+		} else {
 			status = false;
+		}
 		return status;
 	}
 	/**
@@ -525,8 +719,9 @@ public class FileUtils
 			File newPath = new File( directoryName);
 			status = newPath.mkdir();
 			status = true;
-		} else
+		} else {
 			status = false;
+		}
 		return status;
 	}
 
@@ -539,8 +734,9 @@ public class FileUtils
 		boolean status;
 		if (sDCardStatus.equals(Environment.MEDIA_MOUNTED)) {
 			status = true;
-		} else
+		} else {
 			status = false;
+		}
 		return status;
 	}
 
@@ -576,10 +772,12 @@ public class FileUtils
 					status = false;
 				}
 
-			} else
+			} else {
 				status = false;
-		} else
+			}
+		} else {
 			status = false;
+		}
 		return status;
 	}
 
@@ -605,10 +803,310 @@ public class FileUtils
 					se.printStackTrace();
 					status = false;
 				}
-			} else
+			} else {
 				status = false;
-		} else
+			}
+		} else {
 			status = false;
+		}
 		return status;
+	}
+
+	/**
+	 * 获取Asset目录下的文件
+	 *
+	 * @param context  the mContext
+	 * @param fileName the file name
+	 * @return file
+	 */
+	public static File getCacheFile(@NonNull Context context, @NonNull String fileName) {
+		File savedir = null;
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			savedir = new File(context.getExternalCacheDir(), fileName);
+		}
+
+		if (savedir == null) {
+			savedir = new File(context.getCacheDir(), fileName);
+		}
+
+		if (!savedir.exists()) {
+			savedir.mkdirs();
+		}
+		return savedir;
+	}
+
+	/**
+	 * 获取文件目录
+	 *
+	 * @param context the mContext
+	 * @return file
+	 */
+	public static String getFile(@NonNull Context context) {
+		File savedir = null;
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			savedir = context.getExternalFilesDir(null);
+		}
+
+		if (savedir == null) {
+			savedir = context.getFilesDir();
+		}
+
+		if (!savedir.exists()) {
+			savedir.mkdirs();
+		}
+		return savedir.getAbsolutePath();
+	}
+
+	/**
+	 * Gets root path.
+	 *
+	 * @param context the context
+	 * @return the root path
+	 * @description 获取存储路径(如果有内存卡，这是内存卡根目录，如果没有内存卡，则是软件的包file目录)
+	 */
+	public static String getRootFolder(@NonNull Context context) {
+		String rootPath = null;
+
+		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+			rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+		} else {
+			rootPath = context.getFilesDir().getAbsolutePath();
+		}
+		return rootPath;
+	}
+
+
+	/**
+	 * 从Assets文件夹复制文件到SD卡
+	 * @param context
+	 * @param sourceFileName        源文件路径
+	 * @param targetFileName        目标路径
+	 * @return
+	 */
+	public static boolean copyFileFromAsstes(Context context, String sourceFileName, String targetFileName){
+		//创建解压目标目录 
+		File file = new File(targetFileName);
+		InputStream input = null;
+		OutputStream output = null;
+		try {
+			//如果目标目录不存在，则创建 
+			File fp = file.getParentFile();
+			if(!fp.exists()){
+				fp.mkdir();
+			}
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			//打开资源文件 
+			input = context.getAssets().open(sourceFileName);
+			output = new FileOutputStream(targetFileName);
+			int temp;
+			while ((temp = input.read()) != (-1)) {
+				output.write(temp);
+			}
+			input.close();
+			output.close();
+		}catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}finally {
+			CloseableClose(input);
+			CloseableClose(output);
+		}
+		return true;
+	}
+
+	public static boolean copyFolder(@NonNull String oldPath, @NonNull String newPath) {
+		return copyFolder(new File(oldPath), new File(newPath));
+	}
+
+	/**
+	 * 递归删除文件夹
+	 *
+	 * @param dir the dir
+	 * @return the boolean
+	 */
+	public static boolean deleteDir(@NonNull File dir) {
+		if (dir != null && dir.isDirectory()) {
+			String[] children = dir.list();
+			for (int i = 0; i < children.length; i++) {
+				boolean success = deleteDir(new File(dir, children[i]));
+				if (!success) {
+					return false;
+				}
+			}
+		}
+		if (dir == null) {
+			return false;
+		}
+		return dir.delete();
+	}
+
+	/**
+	 * 获取文件夹大小
+	 *
+	 * @param file the file
+	 * @return the folder size
+	 * @throws Exception the exception
+	 */
+	public static long getFolderSize(@NonNull File file) throws Exception {
+		long size = 0;
+		try {
+			File[] fileList = file.listFiles();
+			for (int i = 0; i < fileList.length; i++) {
+				// 如果下面还有文件
+				if (fileList[i].isDirectory()) {
+					size = size + getFolderSize(fileList[i]);
+				} else {
+					size = size + fileList[i].length();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return size;
+	}
+	/**
+	 * 复制文件
+	 * Copy file boolean.
+	 *
+	 * @param sourceFile the source file
+	 * @param targetFile the target file
+	 * @return the boolean
+	 */
+	private static boolean copyFile(@NonNull File sourceFile, @NonNull File targetFile) {
+		if (!sourceFile.exists() || targetFile.exists()) {
+			//原始文件不存在，目标文件已经存在
+			return false;
+		}
+		InputStream input = null;
+		OutputStream output = null;
+		try {
+			input = new FileInputStream(sourceFile);
+			output = new FileOutputStream(targetFile);
+			int temp;
+			while ((temp = input.read()) != (-1)) {
+				output.write(temp);
+			}
+			input.close();
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+		} finally {
+			CloseableClose(input);
+			CloseableClose(output);
+		}
+		return true;
+	}
+
+	/**
+	 * 复制整个文件夹
+	 * Copy folder.
+	 *
+	 * @param oldFile the old path
+	 * @param newPath the new path
+	 */
+	public static boolean copyFolder(@NonNull File oldFile, @NonNull File newPath) {
+		if (oldFile.isFile())//如果是文件，直接复制
+		{
+			return copyFile(oldFile, new File(newPath, oldFile.getName()));
+		}
+		try {//文件夹
+			newPath.mkdirs(); //如果文件夹不存在 则建立新文件夹
+			File[] temps = oldFile.listFiles();
+			File temp;
+			boolean flag = true;
+			length = temps.length;
+			for (int i = 0; i < length; i++) {
+				temp = temps[i];
+				//文件夹里面
+				if (temp.isFile()) {
+					File path = new File(newPath, oldFile.getName());
+					path.mkdirs();
+					File file = new File(path, temp.getName());
+					flag = copyFile(temp, file);
+				} else if (temp.isDirectory()) {//如果是子文件夹
+					flag = copyFolder(temp, new File(newPath + File.separator + oldFile.getName()));
+				}
+
+				if (!flag) {
+					break;
+				}
+			}
+			return flag;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
+	/**
+	 * 移动文件到指定目录
+	 *
+	 * @param oldPath String  如：/test/abc.md
+	 * @param newPath String  如：/abc.md
+	 */
+	public static boolean moveFile(@NonNull String oldPath, @NonNull String newPath) {
+		return moveFile(new File(oldPath), new File(newPath));
+	}
+
+	public static boolean moveFile(@NonNull File oldPath, @NonNull File newPath) {
+		if (!oldPath.isFile()) {
+			return false;
+		}
+		//如果是文件夹，这创建文件
+		if (newPath.isDirectory()) {
+			newPath = new File(newPath, oldPath.getName());
+		}
+		try {
+			return oldPath.renameTo(newPath);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * 移动文件到指定目录
+	 *
+	 * @param oldPath String
+	 * @param newPath String
+	 */
+	public static boolean moveFolder(@NonNull String oldPath, @NonNull String newPath) {
+		return moveFolder(new File(oldPath), new File(newPath));
+	}
+
+	/**
+	 * 移动文件夹
+	 * Move folder.
+	 *
+	 * @param oldFile the old path
+	 * @param newPath the new path
+	 */
+	public static boolean moveFolder(@NonNull File oldFile, File newPath) {
+		return copyFolder(oldFile, newPath) && deleteFile(oldFile);
+	}
+
+	/**
+	 * 删除文件
+	 * Delete file boolean.
+	 *
+	 * @param file the file
+	 * @return the boolean
+	 */
+	public static boolean deleteFile(File file) {
+		return deleteDir(file);
+	}
+
+	public static void CloseableClose(Closeable closeable) {
+		if (closeable != null) {
+			try {
+				closeable.close();
+			} catch (IOException e) {
+			}
+		}
 	}
 }
