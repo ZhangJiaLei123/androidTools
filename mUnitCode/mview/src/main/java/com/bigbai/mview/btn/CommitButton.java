@@ -140,10 +140,6 @@ public class CommitButton extends View {
         this.text = text;
     }
 
-    public CommitButton(Context context) {
-        super(context);
-    }
-
     public CommitButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
