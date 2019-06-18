@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.view.MotionEvent;
-
 /**
  * Created by ccwxf on 2016/2/29.
  */
@@ -15,7 +14,7 @@ public class FinishStatus implements ButtonStatus {
     private static final int Status_Stretch = 0;
     private static final int Status_Finish = 1;
     private static final int Stroke_Over = 10;
-    private static final String Text_Over = "√";
+    private String Text_Over = "完成";
     private static final int Text_Over_Size = 40;
     private static final int Delay_Stretch = 10;
     private static final int Pixel_Stretch = 8;
@@ -34,8 +33,12 @@ public class FinishStatus implements ButtonStatus {
         this.height = height;
         this.centerX = centerX;
         this.centerY = centerY;
-
+        Text_Over = button.textEnd;
         startStretch();
+    }
+
+    public void setTextOver(String Text_Over){
+        this.Text_Over = Text_Over;
     }
 
     /**

@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.bigbai.mview.AttributeHelper;
+
 /**
  * 动画按钮 提交
  */
@@ -35,6 +37,7 @@ public class CommitButton extends View {
     private int textSizeTouch = Text_Size_Touch;
     private int round = Round;
     private String text = Text;
+    public String textEnd = "√";
     //是否停止进度条，由外界设置
     private boolean isProgressStop = false;
 
@@ -148,6 +151,10 @@ public class CommitButton extends View {
 
     public CommitButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        AttributeHelper attributeHelper = new AttributeHelper(getContext(), attrs);
+        Text = attributeHelper.getString("text", "开始");
+        textEnd = attributeHelper.getString("tag", textEnd);
     }
 
     @Override
