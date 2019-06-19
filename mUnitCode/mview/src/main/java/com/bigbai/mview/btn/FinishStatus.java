@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.view.MotionEvent;
+
 /**
  * Created by ccwxf on 2016/2/29.
  */

@@ -5,13 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.bigbai.mview.AttributeHelper;
-
 /**
- * 动画按钮 提交
+ * Created by ccwxf on 2016/2/29.
  */
 public class CommitButton extends View {
 
@@ -36,7 +35,7 @@ public class CommitButton extends View {
     private int textSizeTouch = Text_Size_Touch;
     private int round = Round;
     private String text = "开始";
-    public String textEnd = "√";
+    public String textEnd = "完成";
     //是否停止进度条，由外界设置
     private boolean isProgressStop = false;
 
@@ -140,6 +139,15 @@ public class CommitButton extends View {
         this.text = text;
     }
 
+    public CommitButton(Context context) {
+        super(context);
+    }
+
+    public CommitButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(attrs);
+    }
+
     public CommitButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
@@ -147,8 +155,10 @@ public class CommitButton extends View {
 
     public void init(AttributeSet attrs){
         AttributeHelper attributeHelper = new AttributeHelper(getContext(), attrs);
-        text = attributeHelper.getString("text", text);
-        textEnd = attributeHelper.getString("tag", textEnd);
+        text = attributeHelper.getString("text");
+
+        textEnd = attributeHelper.getString("tag");
+        Log.e("文字",textEnd + "");
     }
 
     @Override
