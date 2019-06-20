@@ -12,7 +12,7 @@ import android.view.View;
  * @author Zhang
  */
 public abstract class BaseFragment extends Fragment {
-    private String fragmentName = "Fragment"; // Fragment 名称
+    public String fragmentName = "Fragment"; // Fragment 名称
     View rootView; // 根视图
     public ViewHolder viewHolder; // 视图
     /** * 父Handler */
@@ -68,11 +68,4 @@ public abstract class BaseFragment extends Fragment {
      */
    public abstract void doMessage(Message msg);
 
-    /**
-     * 设置fragmentName
-     * @param fragmentName
-     */
-    public void setFragmentName(String fragmentName) {
-        this.fragmentName = fragmentName;
-    }
 }
