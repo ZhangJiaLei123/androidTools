@@ -43,7 +43,7 @@ uploadArchives {
         pom.project {
             groupId "com.bigbai.mTimeUnit"
             artifactId "mTimeUnit"
-            version "1.0.4"
+            version "1.0.5"
         }
     }
 }
