@@ -13,7 +13,7 @@ import android.view.View;
  */
 public abstract class BaseFragment extends Fragment {
     public String fragmentName = "Fragment"; // Fragment 名称
-    View rootView; // 根视图
+    public View rootView; // 根视图
     public ViewHolder viewHolder; // 视图
     /** * 父Handler */
     public Handler handlerFather;
