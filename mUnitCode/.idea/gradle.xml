@@ -9,12 +9,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/m" />
             <option value="$PROJECT_DIR$/mActivity" />
             <option value="$PROJECT_DIR$/mBaseUnit" />
             <option value="$PROJECT_DIR$/mLibUnit" />
             <option value="$PROJECT_DIR$/mStringUnit" />
             <option value="$PROJECT_DIR$/mSystem" />
             <option value="$PROJECT_DIR$/mTimeUnit" />
+            <option value="$PROJECT_DIR$/mbaseactivity" />
             <option value="$PROJECT_DIR$/mfileutils" />
             <option value="$PROJECT_DIR$/mimage" />
             <option value="$PROJECT_DIR$/mlog" />
