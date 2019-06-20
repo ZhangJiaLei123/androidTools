@@ -1,9 +1,11 @@
 apply plugin: 'maven'
 apply plugin: 'com.android.library'
-// 构建 gradlew :mSystem:uploadArchives
+// 构建 gradlew :mudp:uploadArchives
 
 android {
     compileSdkVersion 28
+    buildToolsVersion "29.0.0"
+
 
     defaultConfig {
         minSdkVersion 15
@@ -18,7 +20,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -32,15 +34,14 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
-
 uploadArchives {
     repositories.mavenDeployer {
         def mavenDirPath = file('E:\\MyComputer\\Documents\\workSpace\\Android\\library\\mMavenModule')
         repository(url: "file://${mavenDirPath.absolutePath}")
         pom.project {
-            groupId "com.bigbai.mSystem"
-            artifactId "mSystem"
-            version "1.0.1"
+            groupId "com.bigbai.mUdp"
+            artifactId "mUdp"
+            version "1.0.0"
         }
     }
 }

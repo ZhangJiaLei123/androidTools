@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/mlog" />
             <option value="$PROJECT_DIR$/mnetwork" />
             <option value="$PROJECT_DIR$/mnoticeunit" />
+            <option value="$PROJECT_DIR$/mudp" />
             <option value="$PROJECT_DIR$/mview" />
           </set>
         </option>

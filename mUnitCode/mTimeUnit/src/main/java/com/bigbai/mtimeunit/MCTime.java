@@ -13,6 +13,15 @@ public class MCTime {
     public static final int MODEL_YMD_HMS = 4;
     public static final int MODEL_YMD_HMS_N = 5;
 
+    /**
+     * 获取时间
+     * @return
+     */
+    public static Long getTime(){
+        Calendar cal = Calendar.getInstance();
+        return cal.getTime().getTime();
+    }
+
     public static String getTimeStr(int MODEL){
         Calendar calendarNow = Calendar.getInstance();
         calendarNow.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
