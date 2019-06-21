@@ -75,14 +75,14 @@ public class MUdpClient {
                         socket.receive(packetRec);
                         if(callBack != null){ // 收到消息
                             byte[] data;
-                            if(fal) {
-                                data = new byte[leng];
+                            int len = 0;
+                            if(fal) { len = leng;
                             }
-                            else{
-                                data = new byte[packetRec.getLength()];
+                            else{ len = packetRec.getLength();
                             }
+                            data = new byte[len];
                             // 截取有效长度
-                            System.arraycopy(packetRec.getData(), 0, data, 0, packetRec.getLength());
+                            System.arraycopy(packetRec.getData(), 0, data, 0, len);
                             callBack.receiveData(data); // 发送给回调接口
                         }
                     } catch (IOException e) {
@@ -93,6 +93,9 @@ public class MUdpClient {
         }.start();
     }
 
+    public void receiveMessage(int leng) {
+        receiveMessage(leng, true);
+    }
     /**
      * 开始接受消息
      */
