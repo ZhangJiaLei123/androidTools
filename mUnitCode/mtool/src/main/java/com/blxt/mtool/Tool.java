@@ -148,7 +148,6 @@ public class Tool {
             ByteArrayInputStream byteInput = new ByteArrayInputStream(byteArray);
             DataInputStream dataInput = new DataInputStream(byteInput);
             n = dataInput.readInt();
-            System.out.println("整数为： " + n);
         } catch (IOException e) {
 // TODO Auto-generated catch block
             e.printStackTrace();

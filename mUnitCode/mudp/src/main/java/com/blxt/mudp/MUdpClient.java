@@ -12,6 +12,8 @@ import java.net.InetAddress;
  * @note Created by com.blxt.mudp.
  */
 public class MUdpClient {
+    /** 最大缓存字节 */
+    private int MAX_BUFF_LENG = 1024;
     private String addr = "";
 
     int prot = 8080;
@@ -68,10 +70,10 @@ public class MUdpClient {
         new Thread() {
             @Override
             public void run() {
-                byte[] receBuf = new byte[1024];
-                packetRec = new DatagramPacket(receBuf, receBuf.length);
                 while (isGetReceive) {
                     try {
+                        byte[] receBuf = new byte[MAX_BUFF_LENG];
+                        packetRec = new DatagramPacket(receBuf, receBuf.length);
                         socket.receive(packetRec);
                         if(callBack != null){ // 收到消息
                             byte[] data;
@@ -125,5 +127,13 @@ public class MUdpClient {
 
     public void setCallBack(UdpCallBack callBack) {
         this.callBack = callBack;
+    }
+
+    /**
+     * 设置最大缓存字节
+     * @param MAX_BUFF_LENG
+     */
+    public void setMAX_BUFF_LENG(int MAX_BUFF_LENG){
+        this.MAX_BUFF_LENG = MAX_BUFF_LENG;
     }
 }
