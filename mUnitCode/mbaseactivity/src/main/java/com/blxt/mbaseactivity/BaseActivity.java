@@ -1,9 +1,12 @@
 package com.blxt.mbaseactivity;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -12,6 +15,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Activity activity;
     protected static String TAG;
     protected static ViewHolder viewHolder; // ui管理
+
+    @SuppressLint("HandlerLeak")
+    public Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            doMessage(msg);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,5 +108,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Activity getActivity() {
         return activity;
     }
+
+    /**
+     * handler消息处理
+     * @param msg
+     */
+    public abstract void doMessage(Message msg);
 }
 

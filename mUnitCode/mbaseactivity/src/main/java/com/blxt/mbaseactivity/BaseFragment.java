@@ -18,7 +18,7 @@ public abstract class BaseFragment extends Fragment {
     /** * 父Handler */
     public Handler handlerFather;
     @SuppressLint("HandlerLeak")
-    public Handler handler=new Handler(){
+    public Handler fhandler =new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -58,8 +58,8 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-    public Handler getHandler(){
-        return handler;
+    public Handler getFhandler(){
+        return fhandler;
     }
 
     /**

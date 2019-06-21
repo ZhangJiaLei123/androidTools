@@ -59,11 +59,12 @@ public class MUdpClient {
         }).start();
     }
 
-    /**
-     * 开始接受消息
-     */
-    public void receiveMessage() {
 
+    /**
+     * 接收指定长度的字节
+     * @param leng
+     */
+    public void receiveMessage(final int leng, final boolean fal){
         new Thread() {
             @Override
             public void run() {
@@ -73,7 +74,13 @@ public class MUdpClient {
                     try {
                         socket.receive(packetRec);
                         if(callBack != null){ // 收到消息
-                            byte[] data = new byte[packetRec.getLength()];
+                            byte[] data;
+                            if(fal) {
+                                data = new byte[leng];
+                            }
+                            else{
+                                data = new byte[packetRec.getLength()];
+                            }
                             // 截取有效长度
                             System.arraycopy(packetRec.getData(), 0, data, 0, packetRec.getLength());
                             callBack.receiveData(data); // 发送给回调接口
@@ -84,6 +91,13 @@ public class MUdpClient {
                 }
             }
         }.start();
+    }
+
+    /**
+     * 开始接受消息
+     */
+    public void receiveMessage() {
+        receiveMessage(0, false);
     }
 
 

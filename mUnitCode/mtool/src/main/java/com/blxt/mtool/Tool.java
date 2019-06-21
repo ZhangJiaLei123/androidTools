@@ -4,6 +4,9 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -131,6 +134,27 @@ public class Tool {
         return bytes_new;
     }
 
+
+    /**
+     * 字节数组转换成整数
+     * 关键技术：ByteArrayInputStream和DataInputStream
+     * @param byteArray
+     * 需要转换的字节数组
+     * @return
+     */
+    public static int getInt(byte[] byteArray) {
+        int n = 0;
+        try {
+            ByteArrayInputStream byteInput = new ByteArrayInputStream(byteArray);
+            DataInputStream dataInput = new DataInputStream(byteInput);
+            n = dataInput.readInt();
+            System.out.println("整数为： " + n);
+        } catch (IOException e) {
+// TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return n;
+    }
     /**
      * 格式化内存单位
      *
