@@ -1,13 +1,14 @@
 apply plugin: 'maven'
 apply plugin: 'com.android.library'
-// 构建 gradlew :mtool:mtool
+// 构建 gradlew :mtool:uploadArchives
+
 android {
     compileSdkVersion 28
     buildToolsVersion "29.0.0"
 
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -33,7 +34,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
-
 uploadArchives {
     repositories.mavenDeployer {
         def mavenDirPath = file('E:\\MyComputer\\Documents\\workSpace\\Android\\library\\mMavenModule')
@@ -41,7 +41,7 @@ uploadArchives {
         pom.project {
             groupId "com.bigbai.mtool"
             artifactId "mtool"
-            version "1.0.1"
+            version "1.0.0"
         }
     }
 }

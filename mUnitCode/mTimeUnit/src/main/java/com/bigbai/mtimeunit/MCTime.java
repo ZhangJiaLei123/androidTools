@@ -81,7 +81,7 @@ public class MCTime {
      * @param time the time
      * @return the string
      */
-    public static String friendlyTime(long time) {
+    public static String getTimeDescribe(long time) {
         return getTimeDescribe(new Date(time));
     }
     /**
