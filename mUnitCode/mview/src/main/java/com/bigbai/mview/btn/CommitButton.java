@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -158,7 +157,6 @@ public class CommitButton extends View {
         text = attributeHelper.getString("text");
 
         textEnd = attributeHelper.getString("tag");
-        Log.e("文字",textEnd + "");
     }
 
     @Override
