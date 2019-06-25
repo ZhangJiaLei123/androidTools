@@ -8,5 +8,5 @@ package com.blxt.mudp;
  */
 public interface UdpCallBack {
     public int sendData(byte[] data);
-    public int receiveData(byte[] data);
+    public int receiveData(byte[] data, int leng);
 }

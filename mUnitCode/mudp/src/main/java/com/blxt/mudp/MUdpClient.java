@@ -43,7 +43,7 @@ public class MUdpClient {
             e.printStackTrace();
         }
         if(socket == null){
-            Log.e(TAG,"socket创建失败");
+            Log.e(TAG,"socket创建");
         }
     }
 
@@ -92,12 +92,13 @@ public class MUdpClient {
                 int len = 0;
                 if(fal) { len = leng;
                 }
-                else{ len = packetRec.getLength();
+                else{
+                    len = packetRec.getLength();
                 }
                 data = new byte[len];
                 // 截取有效长度
                 System.arraycopy(packetRec.getData(), 0, data, 0, len);
-                callBack.receiveData(data); // 发送给回调接口
+                callBack.receiveData(data, len); // 发送给回调接口
             }
         } catch (IOException e) {
             data = null;
