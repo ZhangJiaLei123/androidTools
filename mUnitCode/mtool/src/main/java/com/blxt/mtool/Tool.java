@@ -1,8 +1,11 @@
 package com.blxt.mtool;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -11,6 +14,7 @@ import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  * @brief：从Res中获取资源
@@ -130,7 +134,6 @@ public class Tool {
         int i = bytes.length;
         for( ; i > 1 && bytes[i - 1] == 0; i--);
         byte[] bytes_new =  new byte[i];
-        System.arraycopy(bytes, 0,  bytes_new, 0, i);
         return bytes_new;
     }
 
@@ -186,4 +189,6 @@ public class Tool {
         BigDecimal result4 = new BigDecimal(teraBytes);
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
     }
+
+
 }
