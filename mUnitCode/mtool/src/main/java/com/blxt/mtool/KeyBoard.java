@@ -14,6 +14,37 @@ import java.util.List;
  * @note Created by com.blxt.mtool.
  */
 public class KeyBoard {
+
+    /**
+     * 隐藏软键盘2
+     * @param activity
+     */
+    public static void hideKeyboard2(Activity activity){
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (null == imm) {
+            return;
+        }
+        boolean isShow = true;
+        if (isShow) {
+            if (activity.getCurrentFocus() != null) {
+                //有焦点打开
+                imm.showSoftInput(activity.getCurrentFocus(), 0);
+            } else {
+                //无焦点打开
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            }
+        } else {
+            if (activity.getCurrentFocus() != null) {
+                //有焦点关闭
+                imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            } else {
+                //无焦点关闭
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            }
+        }
+    }
+
     /**
      * 隐藏软键盘，推荐使用
      * @param context
