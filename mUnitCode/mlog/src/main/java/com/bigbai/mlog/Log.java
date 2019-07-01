@@ -47,7 +47,7 @@ public class LOG {
     /** 是否允许输出显示警告 */
     public static Boolean isWarning = true;
 
-    /** 单个日志文件最大值KB */
+    /** 单个日志文件最大值MB */
     public static int MAXSIZE = 16;
 
     /**
@@ -239,7 +239,7 @@ public class LOG {
         for(int i = 0; i < args.length; i++){
             // 普通字符串
             if(args[i] instanceof String){
-                msgStr += (String)args[i] + "\n";
+                msgStr += (String)args[i] + "-@:";
             }
             // 抛出的异常
             else if(args[i] instanceof Exception){
@@ -247,7 +247,7 @@ public class LOG {
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
                 exists.printStackTrace(pw);
-                msgStr += sw.toString() + "\n";
+                msgStr += sw.toString() + "-@:";
             }
         }
 
@@ -370,8 +370,8 @@ public class LOG {
         }
 
         // 日志超大小，就复制备份
-        if(logFile.length() / 1024 > MAXSIZE){
-            File newFile = new File(logFile.getParent() + "LOG" +  Calendar.getInstance().getTime().getTime() + ".logback") ;
+        if(logFile.length() / 1024 / 1024 > MAXSIZE){
+            File newFile = new File(logFile.getParent() + "/LOG" +  Calendar.getInstance().getTime().getTime() + ".logback") ;
             copyFile(logFile, newFile);
             clearLog();
         }

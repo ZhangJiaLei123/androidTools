@@ -41,7 +41,7 @@ uploadArchives {
         pom.project {
             groupId "com.bigbai.mlog"
             artifactId "mlog"
-            version "1.0.3"
+            version "1.0.4"
         }
     }
 }
