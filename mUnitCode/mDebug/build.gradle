@@ -41,7 +41,7 @@ uploadArchives {
         pom.project {
             groupId "com.bigbai.mDebug"
             artifactId "mDebug"
-            version "1.0.0"
+            version "1.0.1"
         }
     }
 }

@@ -5,6 +5,8 @@ import android.view.View;
 import com.bigbai.mlog.LOG;
 
 import java.util.Calendar;
+import java.util.Date;
+
 
 /**
  * 连击监听
@@ -19,9 +21,9 @@ public class OnDoubleHitListener implements View.OnClickListener {
     /** 连击阈值*/
     private short touchTop = 5;
     /** 重置时间阈值 */
-    private int resetTime = 100;
+    private int resetTime = 1000;
 
-    private long lastTime = -1;
+    private Date lastTime = null;
 
     // 连击监听回调
     CallBackDoubleHit callBackDoubleHit = null;
@@ -35,14 +37,20 @@ public class OnDoubleHitListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        long timeNow = getTime();
-        if(lastTime == -1){
-            lastTime = timeNow;
+
+        Date timeDateNow = new Date(System.currentTimeMillis());
+        if(lastTime == null){
+            lastTime = timeDateNow;
         }
 
+        /* 计算User静止不动作的时间间距 */
+        /**当前的系统时间 - 上次触摸屏幕的时间 = 静止不动的时间**/
+        long timePeriod = (long) timeDateNow.getTime() - (long) lastTime.getTime();
+
         // 连击时间小于阈值，就累加连击次数
-        if(Math.abs(resetTime - touchTimes) <= resetTime){
+        if( timePeriod <= resetTime){
             touchTimes++;
+
         }
         // 否者就清空连击次数
         else{
@@ -59,7 +67,7 @@ public class OnDoubleHitListener implements View.OnClickListener {
             touchTimes = 0;
         }
 
-        lastTime = timeNow;
+        lastTime = timeDateNow;
     }
 
     /**
@@ -67,8 +75,8 @@ public class OnDoubleHitListener implements View.OnClickListener {
      * @return
      */
     public static long getTime(){
-        Calendar cal = Calendar.getInstance();
-        return cal.getTime().getTime();
+        Date timeNow = new Date(System.currentTimeMillis());
+        return timeNow.getTime();
     }
 
     public short getTouchTop() {
@@ -85,14 +93,6 @@ public class OnDoubleHitListener implements View.OnClickListener {
 
     public void setResetTime(int resetTime) {
         this.resetTime = resetTime;
-    }
-
-    public long getLastTime() {
-        return lastTime;
-    }
-
-    public void setLastTime(long lastTime) {
-        this.lastTime = lastTime;
     }
 
     public CallBackDoubleHit getCallBackDoubleHit() {
