@@ -1,6 +1,6 @@
 apply plugin: 'maven'
 apply plugin: 'com.android.library'
-// 构建 gradlew :mlog:uploadArchives
+// 构建 gradlew :mDebug:uploadArchives
 
 
 android {
@@ -39,9 +39,9 @@ uploadArchives {
         def mavenDirPath = file('E:\\MyComputer\\Documents\\workSpace\\Android\\library\\mMavenModule')
         repository(url: "file://${mavenDirPath.absolutePath}")
         pom.project {
-            groupId "com.bigbai.mlog"
-            artifactId "mlog"
-            version "1.0.4"
+            groupId "com.bigbai.mDebug"
+            artifactId "mDebug"
+            version "1.0.0"
         }
     }
 }

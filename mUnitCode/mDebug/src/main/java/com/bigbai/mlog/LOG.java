@@ -239,7 +239,7 @@ public class LOG {
         for(int i = 0; i < args.length; i++){
             // 普通字符串
             if(args[i] instanceof String){
-                msgStr += (String)args[i] + "-@:";
+                msgStr += (String)args[i];
             }
             // 抛出的异常
             else if(args[i] instanceof Exception){
@@ -247,7 +247,10 @@ public class LOG {
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
                 exists.printStackTrace(pw);
-                msgStr += sw.toString() + "-@:";
+                msgStr += sw.toString();
+            }
+            if( i + 1 < args.length){
+                msgStr += "--";
             }
         }
 

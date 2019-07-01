@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/m" />
             <option value="$PROJECT_DIR$/mActivity" />
             <option value="$PROJECT_DIR$/mBaseUnit" />
+            <option value="$PROJECT_DIR$/mDebug" />
             <option value="$PROJECT_DIR$/mLibUnit" />
             <option value="$PROJECT_DIR$/mStringUnit" />
             <option value="$PROJECT_DIR$/mSystem" />
@@ -20,7 +21,6 @@
             <option value="$PROJECT_DIR$/mfileutils" />
             <option value="$PROJECT_DIR$/mheneng" />
             <option value="$PROJECT_DIR$/mimage" />
-            <option value="$PROJECT_DIR$/mlog" />
             <option value="$PROJECT_DIR$/mnetwork" />
             <option value="$PROJECT_DIR$/mnoticeunit" />
             <option value="$PROJECT_DIR$/mtool" />
