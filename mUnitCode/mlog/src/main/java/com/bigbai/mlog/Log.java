@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Calendar;
@@ -44,6 +46,9 @@ public class LOG {
     public static Boolean isError = true;
     /** 是否允许输出显示警告 */
     public static Boolean isWarning = true;
+
+    /** 单个日志文件最大值KB */
+    public static int MAXSIZE = 16;
 
     /**
      * 路径
@@ -81,7 +86,7 @@ public class LOG {
      */
     public static File getInstance(Context context){
         String path = PATH.getAppCachePath(context);
-        File logFile = new File(path + "/AppInfo/Bxlt/Log.log");
+        File logFile = new File(path + "/AppInfo/Bxlt/Log" + ".log");
         File pathFile = logFile.getParentFile();
         if( !pathFile.exists()){
             pathFile.mkdirs();
@@ -100,7 +105,6 @@ public class LOG {
 
         return logFile;
     }
-
 
 
     /**
@@ -364,6 +368,14 @@ public class LOG {
         if(logFile == null || !logFile.exists()){
             throw new Exception(TAG + ":日志文件不存在，请检查路径");
         }
+
+        // 日志超大小，就复制备份
+        if(logFile.length() / 1024 > MAXSIZE){
+            File newFile = new File(logFile.getParent() + "LOG" +  Calendar.getInstance().getTime().getTime() + ".logback") ;
+            copyFile(logFile, newFile);
+            clearLog();
+        }
+
         try {
             //这里就不要用openFileOutput了,那个是往手机内存中写数据的
             FileOutputStream output = new FileOutputStream(logFile,isAdd);
@@ -456,4 +468,56 @@ public class LOG {
         }).show();
     }
 
+    /**
+     * 复制文件
+     * Copy file boolean.
+     *
+     * @param sourceFile the source file
+     * @param targetFile the target file
+     * @return the boolean
+     */
+    private static boolean copyFile(@NonNull File sourceFile, @NonNull File targetFile) {
+        if (!sourceFile.exists() || targetFile.exists()) {
+            //原始文件不存在，目标文件已经存在
+            return false;
+        }
+        InputStream input = null;
+        OutputStream output = null;
+        try {
+            input = new FileInputStream(sourceFile);
+            output = new FileOutputStream(targetFile);
+            int temp;
+            while ((temp = input.read()) != (-1)) {
+                output.write(temp);
+            }
+            input.close();
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+        } finally {
+            try {
+                if( input != null) {
+                    input.close();
+                }
+                if( output != null) {
+                    output.close();
+                }
+            }catch (Exception e){
+
+            }
+
+        }
+        return true;
+    }
+
+
+    public static File getLogFile() {
+        return logFile;
+    }
+
+    public static void setLogFile(File logFile) {
+        LOG.logFile = logFile;
+    }
 }
