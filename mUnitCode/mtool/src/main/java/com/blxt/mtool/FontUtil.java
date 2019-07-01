@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * @brief：字体工具
+ * 字体工具
  * @author: Zhang
  * @date: 2019/6/28 - 11:53
  * @note Created by com.blxt.mtool.

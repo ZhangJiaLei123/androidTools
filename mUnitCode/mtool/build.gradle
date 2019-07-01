@@ -41,7 +41,7 @@ uploadArchives {
         pom.project {
             groupId "com.bigbai.mtool"
             artifactId "mtool"
-            version "1.0.4"
+            version "1.0.5"
         }
     }
 }
