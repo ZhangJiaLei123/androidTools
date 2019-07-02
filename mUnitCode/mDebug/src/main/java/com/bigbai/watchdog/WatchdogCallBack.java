@@ -1,5 +1,7 @@
 package com.bigbai.watchdog;
 
+import java.util.List;
+
 /**
  * 看门狗回调
  * @author: Zhang
@@ -13,4 +15,6 @@ public interface WatchdogCallBack
 
     /** 喂食失败 */
     void feedFalse(Wdog wdog);
+
+    void walk(List<Wdog> wdogs);
 }

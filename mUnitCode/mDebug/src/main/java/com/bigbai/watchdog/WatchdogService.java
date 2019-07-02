@@ -3,6 +3,7 @@ package com.bigbai.watchdog;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
@@ -21,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 public class WatchdogService extends Service {
     List<Wdog> wdogs = null;
     WatchdogCallBack watchdogCallBack = null;
+    // 遛狗的定时器
     private ScheduledExecutorService mScheduledExecutorService = null;
-
 
     /**
      * 遛狗任务，遛完狗后检查看门狗的饥饿度，饿死了就触发犬吠
@@ -34,48 +35,39 @@ public class WatchdogService extends Service {
                 return;
             }
 
+
+            watchdogCallBack.walk(wdogs);
             for(int i = 0; i < wdogs.size(); i++){
-                if(wdogs.get(i).sports() <= 0){ // 饥饿值为0时就触发犬吠
+                if(wdogs.get(i).sports() <= 0 && wdogs.get(i).isLive()){ // 饥饿值为0时就触发犬吠
                     watchdogCallBack.dogBark(wdogs.get(i));
+                    wdogs.get(i).setDie();
+                    Log.i("遛狗", wdogs.get(i).toString());
                 }
             }
         }
     };
 
-
-//    /**
-//     * 基本参数
-//     */
     /** 核心线程大小 */
     static int corePoolSize = 3;
-//    /** 线程池最大容量大小 */
-//    static int maximumPoolSizeSize = 10;
-//    /** 线程空闲时，线程存活的时间 */
-//    static long keepAliveTime = 1;
-//    /** 任务队列。一个阻塞队列 */
-//    static ArrayBlockingQueue workQueue = new ArrayBlockingQueue(10);
-//
 
+    public WatchdogService(){
+
+    }
     public WatchdogService(WatchdogCallBack watchdogCallBack){
         this.watchdogCallBack = watchdogCallBack;
-
-//        // 使用默认饱和策略创建线程池
-//        ThreadPoolExecutor executor = new ThreadPoolExecutor(
-//                corePoolSize,
-//                maximumPoolSizeSize,
-//                keepAliveTime,
-//                TimeUnit.SECONDS,
-//                workQueue,
-//                // JDK1.8后此方法作废
-//                new ThreadFactoryBuilder().setNameFormat("XX-task-%d").build());
-//        // 向线程池中添加任务
-//        executor.execute(runnableCheacLive);
 
         mScheduledExecutorService = new ScheduledThreadPoolExecutor(corePoolSize,
                 new ThreadFactoryBuilder().setNameFormat("BLXT-Watchdog-task-%d").build());
         // 但周期是上一次任务结束和下一次任务开始的时间间隔
-        mScheduledExecutorService.scheduleWithFixedDelay(runnableCheacLive,5, 1000, TimeUnit.SECONDS);//延时5秒执行
 
+    }
+
+    public void start(){
+        mScheduledExecutorService.scheduleWithFixedDelay(runnableCheacLive,5, 1, TimeUnit.SECONDS);//延时5秒执行
+    }
+
+    public void stop(){
+        mScheduledExecutorService.shutdownNow();
     }
 
     @Override
@@ -131,8 +123,8 @@ public class WatchdogService extends Service {
         if(wdogs == null || wdogs.size() <=0){
             return false;
         }
-
         for(int i = 0; i < wdogs.size(); i++){
+
             if(wdogs.get(i).feed() <= 0){ // 喂食失败的
                 watchdogCallBack.dogBark(wdogs.get(i));
             }
@@ -159,5 +151,9 @@ public class WatchdogService extends Service {
         this.wdogs.add(wdog);
 
         return true;
+    }
+
+    public List<Wdog> getWdogs() {
+        return wdogs;
     }
 }

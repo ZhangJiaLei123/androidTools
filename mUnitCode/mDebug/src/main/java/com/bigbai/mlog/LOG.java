@@ -28,6 +28,11 @@ import java.util.TimeZone;
  */
 public class LOG {
 
+    private final static String INFO    = "[INFO]   ";
+    private final static String DENUG   = "[DENUG]  ";
+    private final static String ERROR   = "[ERROR]  ";
+    private final static String WARNING = "[WARNING]";
+
     /** 默认TAG */
     public static String TAG = "日志";
     /** 是否保存 */
@@ -120,7 +125,7 @@ public class LOG {
             return;
         }
 
-        String msgStr = String.format("[INFO]%s:", TAG);
+        String msgStr = String.format("%s%s:", INFO, TAG);
 
         makeLog(msgStr, args);
     }
@@ -151,7 +156,7 @@ public class LOG {
             return;
         }
 
-        String msgStr = String.format("[DEBUG]%s:", TAG);
+        String msgStr = String.format("%s%s:", DENUG, TAG);
 
         makeLog(msgStr, args);
 
@@ -181,7 +186,7 @@ public class LOG {
             return;
         }
 
-        String msgStr = String.format("[ERROR]%s:", TAG);
+        String msgStr = String.format("%s%s:", ERROR, TAG);
 
         makeLog(msgStr, args);
     }
@@ -211,7 +216,7 @@ public class LOG {
            return;
         }
 
-        String msgStr = String.format("[WARNING]%s:", TAG);
+        String msgStr = String.format("%s%s:", WARNING,TAG);
 
         makeLog(msgStr, args);
 

@@ -57,7 +57,6 @@ public class Wdog {
         Hp--;
         if(Hp <= 0){
             Hp = 0;
-            isLive = false;
         }
         return Hp;
     }
@@ -68,12 +67,10 @@ public class Wdog {
      */
     public int feed(){
         if(!isLive){ // 饿昏了，无法喂食
-            return 0;
+         //  return 0;
         }
-        Hp++;
-        if(Hp >= MaxHp){
-            Hp = MaxHp;
-        }
+        Hp = MaxHp;
+
         return Hp;
     }
 
@@ -91,5 +88,25 @@ public class Wdog {
             isLive = true;
         }
         return true;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Wdog{" +
+                "MaxHp=" + MaxHp +
+                ", Hp=" + Hp +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", isLive=" + isLive +
+                '}';
+    }
+
+    public boolean isLive(){
+        return isLive;
+    }
+
+    public void setDie(){
+        isLive = false;
     }
 }
