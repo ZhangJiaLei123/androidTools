@@ -17,13 +17,16 @@ import java.util.Date;
 public class OnDoubleHitListener implements View.OnClickListener {
 
     /** 连击次数 */
-    private short touchTimes = 0;
+    private int touchTimes = 0;
     /** 连击阈值*/
     private short touchTop = 5;
     /** 重置时间阈值 */
     private int resetTime = 1000;
 
     private Date lastTime = null;
+
+    /** 连击锁定,true时无法响应连击 */
+    boolean isLack = false;
 
     // 连击监听回调
     CallBackDoubleHit callBackDoubleHit = null;
@@ -37,6 +40,10 @@ public class OnDoubleHitListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+
+        if(isLack){
+            return;
+        }
 
         Date timeDateNow = new Date(System.currentTimeMillis());
         if(lastTime == null){
@@ -56,11 +63,12 @@ public class OnDoubleHitListener implements View.OnClickListener {
         }
 
         if( this.callBackDoubleHit != null){
-            this.callBackDoubleHit.onDoubleClick(v, touchTimes);
+            touchTimes = this.callBackDoubleHit.onDoubleClick(v, touchTimes);
         }
         if( touchTimes >= touchTop){
+            isLack = true; // 标记连击锁
             if( this.callBackDoubleHit != null){
-                this.callBackDoubleHit.onCompleteClick(v, touchTimes);
+                isLack = this.callBackDoubleHit.onCompleteClick(v, touchTimes);
             }
             touchTimes = 0;
         }
@@ -99,5 +107,16 @@ public class OnDoubleHitListener implements View.OnClickListener {
 
     public void setCallBackDoubleHit(CallBackDoubleHit callBackDoubleHit) {
         this.callBackDoubleHit = callBackDoubleHit;
+    }
+
+    /**
+     * 解除连击锁定
+     */
+    public void unlock(){
+        isLack = false;
+    }
+
+    public boolean isLack(){
+        return isLack;
     }
 }

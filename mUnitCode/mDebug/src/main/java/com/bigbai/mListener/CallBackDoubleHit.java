@@ -14,13 +14,16 @@ public interface CallBackDoubleHit {
      * 连击回调
      * @param view          视图
      * @param touchTimes    连击次数
+     * @return  返回连击次数，返回的连击次数将被应用到监听器
      */
-    void onDoubleClick(View view, int touchTimes);
+    int onDoubleClick(View view, int touchTimes);
 
     /**
      * 完成连击
-     * @param view
-     * @param touchTimes
+     * @param view          视图
+     * @param touchTimes    连击次数
+     * @return  是否所定连击，true时，连击被锁定，下次连击时不会相响应
+     * 不需要时就返回false
      */
-    void onCompleteClick(View view, int touchTimes);
+    boolean onCompleteClick(View view, int touchTimes);
 }
