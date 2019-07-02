@@ -2,7 +2,6 @@ apply plugin: 'maven'
 apply plugin: 'com.android.library'
 // 构建 gradlew :mview:uploadArchives
 
-
 android {
     compileSdkVersion 28
 

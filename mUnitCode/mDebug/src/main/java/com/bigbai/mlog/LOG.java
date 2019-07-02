@@ -368,8 +368,11 @@ public class LOG {
      * @return
      */
     public  static boolean writeBySd(File logFile, String filecontent,boolean isAdd) throws Exception {
-        if(logFile == null || !logFile.exists()){
+        if(logFile == null) {
             throw new Exception(TAG + ":日志文件不存在，请检查路径");
+        }
+        else if(!logFile.exists()){
+            logFile.createNewFile();
         }
 
         // 日志超大小，就复制备份

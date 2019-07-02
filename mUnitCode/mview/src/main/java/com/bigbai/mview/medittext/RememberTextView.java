@@ -56,7 +56,7 @@ public class RememberTextView extends EditText {
         if(SP != null){
             return;
         }
-        SP = context.getSharedPreferences("包名_preferences", MODE_PRIVATE);
+        SP = context.getSharedPreferences(context.getPackageName() + "_preferences", MODE_PRIVATE);
         String text = super.getText().toString();
         int id = getId();
         String textValue = SP.getString("_RememberTextView_" + id , text);
