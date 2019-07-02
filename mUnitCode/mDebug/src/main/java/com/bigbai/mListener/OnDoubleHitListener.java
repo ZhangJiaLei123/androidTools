@@ -46,7 +46,6 @@ public class OnDoubleHitListener implements View.OnClickListener {
         /* 计算User静止不动作的时间间距 */
         /**当前的系统时间 - 上次触摸屏幕的时间 = 静止不动的时间**/
         long timePeriod = (long) timeDateNow.getTime() - (long) lastTime.getTime();
-        System.out.println("" + timeDateNow.getTime() + "-" + lastTime.getTime() + "=" + timePeriod);
         // 连击时间小于阈值，就累加连击次数
         if( timePeriod <= resetTime && timePeriod > 0){
             touchTimes++;
