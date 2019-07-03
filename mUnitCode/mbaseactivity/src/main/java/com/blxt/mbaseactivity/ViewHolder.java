@@ -66,4 +66,5 @@ public abstract class ViewHolder {
      */
     public abstract void initUIData();
 
+
 }

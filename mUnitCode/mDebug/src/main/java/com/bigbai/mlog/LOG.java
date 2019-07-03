@@ -531,4 +531,12 @@ public class LOG {
     public static void setLogFile(File logFile) {
         LOG.logFile = logFile;
     }
+
+    public static View getLogView() {
+        return logView;
+    }
+
+    public static void setLogView(View logView) {
+        LOG.logView = logView;
+    }
 }

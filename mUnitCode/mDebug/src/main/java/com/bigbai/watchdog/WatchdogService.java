@@ -35,20 +35,18 @@ public class WatchdogService extends Service {
                 return;
             }
 
-
             watchdogCallBack.walk(wdogs);
             for(int i = 0; i < wdogs.size(); i++){
                 if(wdogs.get(i).sports() <= 0 && wdogs.get(i).isLive()){ // 饥饿值为0时就触发犬吠
                     watchdogCallBack.dogBark(wdogs.get(i));
                     wdogs.get(i).setDie();
-                    Log.i("遛狗", wdogs.get(i).toString());
                 }
             }
         }
     };
 
     /** 核心线程大小 */
-    static int corePoolSize = 3;
+    static int corePoolSize = 1;
 
     public WatchdogService(){
 

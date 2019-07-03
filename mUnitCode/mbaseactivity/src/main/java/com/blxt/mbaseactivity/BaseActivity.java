@@ -3,6 +3,7 @@ package com.blxt.mbaseactivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Activity activity;
     protected static String TAG;
     protected static ViewHolder viewHolder; // ui管理
+    Application application;                // Application单例A
 
     @SuppressLint("HandlerLeak")
     public Handler mHandler=new Handler(){
@@ -31,14 +33,41 @@ public abstract class BaseActivity extends AppCompatActivity {
         TAG = getClass().getName();
         context = this;
         activity = this;
+        findViewById();
+        initBaseUI();
+        addOnClickListener();
     }
 
+
+    /** 更新Data线程 */
+    public void starRunData()
+    {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                initData();
+                starRunUI();
+            }
+        }).start();
+    }
+
+    /** 更新UI线程 */
+    public void starRunUI()
+    {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                initUI();
+            }
+        });
+    }
 
     //Activity创建或者从后台重新回到前台时被调用
     @Override
     protected void onStart() {
         super.onStart();
-
+        application = getApplication();
+        starRunData();
     }
 
     //Activity从后台重新回到前台时被调用
@@ -77,7 +106,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-    private int ActivityParam = 1;
+
+
+    /**
+     * 释放资源
+     */
+    @Override
+    public void finish(){
+        super.finish();
+        release();
+    }
+
     /**
      * Activity被系统杀死时被调用.
      * 例如:屏幕方向改变时,Activity被销毁再重建;当前Activity处于后台,系统资源紧张将其杀死.
@@ -86,7 +125,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt("ActivityParam", ActivityParam);
+        // outState.putInt("ActivityParam", int ActivityParam);
         super.onSaveInstanceState(outState);
     }
 
@@ -97,7 +136,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        ActivityParam = savedInstanceState.getInt("ActivityParam");
+        // int ActivityParam = savedInstanceState.getInt("ActivityParam");
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -114,5 +153,25 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param msg
      */
     public abstract void doMessage(Message msg);
+
+    /** findViewById，在 onCreate中自动调用 */
+    public abstract void findViewById();
+
+    /** 添加监听 ，在 onCreate中自动调用 */
+    public abstract void addOnClickListener();
+
+    /** 加载初始UI资源 */
+    public abstract void initBaseUI();
+
+    /** 在线程中获取加载UI,在initData后自动加载 */
+    public abstract void initUI();
+
+    /** 在线程中加载数据，在onStart中自动调用 */
+    public abstract void initData();
+
+    /** 资源释放, 在finish中自动调用 */
+    public abstract void release();
+
+
 }
 

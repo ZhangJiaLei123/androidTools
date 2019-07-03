@@ -29,6 +29,14 @@ allprojects {
     }
 }
 
+allprojects {
+    repositories {
+        maven {
+            url "https://raw.githubusercontent.com/ZhangJiaLei123/androidTools/master"
+        }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

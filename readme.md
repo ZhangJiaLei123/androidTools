@@ -27,39 +27,36 @@
 
 ## 二 模块
 ### 1、日志模块
-* 需要文件读写权限
+
+* 基于java的 System.out.println() 的打印方式，兼容普通的java项目。
+* 目前有4个输出等级：INFO、DEBUG、WARNING、ERROR，对应的调用方式为 LOG.i();LOG.d();LOG.w();LOG.e();
+* 可打印异常抛出，调用方式为: LOG.(String TAG, Obj...args);arg可以是 String 或 Exception
 
 #### 1.1 导入依赖
 ```
-    implementation 'com.bigbai.mlog:mlog:1.0.0'
+    implementation 'com.bigbai.mDenug:mDenug:1.0.3'
 ```
 
-#### 1.2 基础使用
+#### 简单使用
 
- log模块是对原Log进行加工处理，简化log拼写和日志保存。简要使用如下:
-
-* 简易模式，省略TAG，默认TAG为“测试”，可通过 LOG.TAG="TAG"修改
- ``` java
-LOG.i("str");
- ```
-
-* 一般模式
- ``` java
-LOG.i("TAG","str");
- ```
-
-* 日志保存到本地
 ``` java
-LOG.isSave = true;              // 开启日志保存
-LOG.LogPath = "log.log";        // 自定义日志路径（包括文件名）
-String logStr = LOG.getLog();   // 获取日志文件
+LOG.isLog = true; // 开启日志打印，默认为true
+LOG.isInfo = false; // 关闭INFO信息的打印和保存到文件
+LOG.isSave = true; // 开启日志文件保存到本地（需要设置文件路径）
+File file = LOG.getInstance(); // 获取默认日志文件 ：/data/data/包名/cache/AppInfo/Bxlt/Log.log
+LOG.setLogFile(File); // 设置日志保存文件
+LOG.MAXSIZE = 16; // 日志文件最大容量，单位为Mb，
 LOG.clearLog();                 // 清除日志文件
+
 ```
 
-* 显示日志对话框，并进行简单操作
+Android 专用
+``` java
+LOG.showLogDialog(Content); // 显示日志对话框，并进行简单操作
+LOG.setLogView(View);   // 同步打印日志到UI视图（TextView和EditText）
 ```
-LOG.showLogDialog(Content);
-```
+
+
 
 ### 2、网络模块
 
