@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MView">
+        <attr name="bottomline" format="boolean" />
+        <attr name="tipText" format="string" />
+        <attr name="isBoolean" format="boolean"/>
+        <attr name="img" format="integer" />
+        <attr name="msg" format="string" />
+        <attr name="title" format="string" />
+        <attr name="hint" format="string" />
+        <attr name="relate" format="integer" />
+        <attr name="checked" format="boolean" />
+        <attr name="seekbar_progress" format="integer" />
+        <attr name="seekbar_max" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundProgressBar">
+        <attr name="defaultRoundColor" format="color" />
+        <attr name="roundProgressColor" format="color" />
+        <attr name="roundWidth" format="dimension"></attr>
+        <attr name="percenTextColor" format="color" />
+        <attr name="percenTextSize" format="dimension" />
+        <attr name="electriTextColor" format="color" />
+        <attr name="electriTextSize" format="dimension" />
+        <attr name="chargingColor" format="color" />
+        <attr name="max" format="integer"></attr>
+    </declare-styleable>
+
+</resources>
