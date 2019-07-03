@@ -11,17 +11,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.blxt.securitybox.view.Mview.RoundProgressBar
+        <com.bigbai.mview.btn.RoundProgressBar
             android:id="@+id/pbr_spik"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
-            app:chargingColor="@color/gold"
-            app:defaultRoundColor="@color/gray"
-            app:electriTextColor="@color/white"
             app:max="5"
-            app:percenTextColor="@color/white"
-            app:roundProgressColor="@color/green"
             app:roundWidth="5dp"
             tools:ignore="MissingConstraints"
             android:layout_gravity="right" />
