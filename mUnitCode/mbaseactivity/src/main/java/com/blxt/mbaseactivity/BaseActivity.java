@@ -152,7 +152,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * handler消息处理
      * @param msg
      */
-    public abstract void doMessage(Message msg);
+    public abstract boolean doMessage(Message msg);
 
     /** findViewById，在 onCreate中自动调用 */
     public abstract void findViewById();

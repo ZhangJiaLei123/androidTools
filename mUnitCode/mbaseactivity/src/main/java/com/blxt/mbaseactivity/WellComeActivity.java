@@ -8,7 +8,7 @@ import android.os.Message;
 /**
  * 欢迎界面模板
  */
-public class WellComeActivity extends BaseActivity {
+public abstract class WellComeActivity extends BaseActivity {
 
     Thread thread = null;
     Runnable runnable = null;
@@ -45,39 +45,5 @@ public class WellComeActivity extends BaseActivity {
         thread.start();
     }
 
-    @Override
-    public void doMessage(Message msg) {
-
-    }
-
-    @Override
-    public void findViewById() {
-
-    }
-
-    @Override
-    public void addOnClickListener() {
-
-    }
-
-    @Override
-    public void initBaseUI() {
-
-    }
-
-    @Override
-    public void initUI() {
-
-    }
-
-    @Override
-    public void initData() {
-
-    }
-
-    @Override
-    public void release() {
-
-    }
 
 }
