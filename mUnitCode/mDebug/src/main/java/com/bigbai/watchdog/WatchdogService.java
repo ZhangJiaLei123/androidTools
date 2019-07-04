@@ -25,6 +25,13 @@ public class WatchdogService extends Service {
     // 遛狗的定时器
     private ScheduledExecutorService mScheduledExecutorService = null;
 
+    /** 任务启动延时时间 */
+    long initialDelay = 5;
+    /** 看门口遛狗周期，默认单位为秒 */
+    long delay = 1;
+    /** 看门狗遛狗单位，默认单位为秒 */
+    TimeUnit unit = TimeUnit.SECONDS;
+
     /**
      * 遛狗任务，遛完狗后检查看门狗的饥饿度，饿死了就触发犬吠
      */
@@ -51,6 +58,7 @@ public class WatchdogService extends Service {
     public WatchdogService(){
 
     }
+
     public WatchdogService(WatchdogCallBack watchdogCallBack){
         this.watchdogCallBack = watchdogCallBack;
 
@@ -61,7 +69,7 @@ public class WatchdogService extends Service {
     }
 
     public void start(){
-        mScheduledExecutorService.scheduleWithFixedDelay(runnableCheacLive,5, 1, TimeUnit.SECONDS);//延时5秒执行
+        mScheduledExecutorService.scheduleWithFixedDelay(runnableCheacLive,initialDelay, delay, unit);//延时5秒执行
     }
 
     public void stop(){
@@ -149,6 +157,30 @@ public class WatchdogService extends Service {
         this.wdogs.add(wdog);
 
         return true;
+    }
+
+    public long getInitialDelay() {
+        return initialDelay;
+    }
+
+    public void setInitialDelay(long initialDelay) {
+        this.initialDelay = initialDelay;
+    }
+
+    public long getDelay() {
+        return delay;
+    }
+
+    public void setDelay(long delay) {
+        this.delay = delay;
+    }
+
+    public TimeUnit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(TimeUnit unit) {
+        this.unit = unit;
     }
 
     public List<Wdog> getWdogs() {

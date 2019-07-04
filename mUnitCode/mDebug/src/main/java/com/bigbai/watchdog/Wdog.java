@@ -1,5 +1,7 @@
 package com.bigbai.watchdog;
 
+import java.util.Date;
+
 /**
  * 看门狗对象，饥饿度（Hp）为0时触发狗叫
  * @author: Zhang
@@ -19,6 +21,14 @@ public class Wdog {
 
     /** 是否饿昏了*/
     private boolean isLive = true;
+
+    /** 复活计数 */
+    private int reviveCount = 0;
+    /** 上次复活时间 */
+    private long lastReviveTime = -1;
+    /** 复活间隔时间 */
+    private long reviveTime = 0;
+
 
     /**
      * 创建一个看门狗，默认Hp为100，
@@ -75,6 +85,24 @@ public class Wdog {
     }
 
     /**
+     * 喂食
+     * @param hp  需要喂食的量，最大值为MaxHp
+     * @return
+     */
+    public int feed(int hp){
+        if(!isLive){ // 饿昏了，无法喂食
+            //  return 0;
+        }
+
+        Hp += hp;
+        if( Hp >= MaxHp) {
+            Hp = MaxHp;
+        }
+
+        return Hp;
+    }
+
+    /**
      * 满血复活看门狗,
      * 如果看门口是活的，就不操作
      * @return
@@ -84,6 +112,14 @@ public class Wdog {
             return !isLive;
         }
         else {
+            long time = new Date(System.currentTimeMillis()).getTime(); // 获取时间
+            if(lastReviveTime < 0){ // 初始时间为0
+                lastReviveTime = time;
+            }
+            reviveTime = time - lastReviveTime;// 计算上次复活时间间隔
+            lastReviveTime = time;
+
+            reviveCount++;
             this.Hp = this.MaxHp;
             isLive = true;
         }
@@ -100,6 +136,22 @@ public class Wdog {
                 ", name='" + name + '\'' +
                 ", isLive=" + isLive +
                 '}';
+    }
+
+    /**
+     * 获取复活次数
+     * @return
+     */
+    public int getReviveCount() {
+        return reviveCount;
+    }
+
+    /**
+     * 上次复活时间间隔
+     * @return
+     */
+    public long getReviveTime() {
+        return reviveTime;
     }
 
     public boolean isLive(){
