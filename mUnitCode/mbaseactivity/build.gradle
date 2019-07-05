@@ -39,7 +39,7 @@ dependencies {
 
     implementation 'com.bigbai.mfileutils:mfileutils:1.0.1'
     implementation 'com.bigbai.mview:mview:1.0.6'
-    implementation 'com.bigbai.mDebug:mDebug:1.0.3'
+    implementation 'com.bigbai.mDebug:mDebug:1.0.4'
 
 }
 

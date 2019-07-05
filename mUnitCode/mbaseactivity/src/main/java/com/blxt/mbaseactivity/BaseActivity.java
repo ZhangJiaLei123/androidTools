@@ -36,6 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         findViewById();
         initBaseUI();
         addOnClickListener();
+        starRunData();
     }
 
 
@@ -67,7 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         application = getApplication();
-        starRunData();
+
     }
 
     //Activity从后台重新回到前台时被调用
@@ -166,7 +167,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /** 在线程中获取加载UI,在initData后自动加载 */
     public abstract void initUI();
 
-    /** 在线程中加载数据，在onStart中自动调用 */
+    /** 在线程中加载数据，在onCreate中自动调用 */
     public abstract void initData();
 
     /** 资源释放, 在finish中自动调用 */
