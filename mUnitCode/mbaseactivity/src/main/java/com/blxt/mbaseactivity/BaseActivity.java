@@ -24,8 +24,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             doMessage(msg);
+            msg.recycle(); // 释放消息
         }
     };
+
+    /***
+     * 从消息池获取消息，避免大量新建对象带来的资源浪费
+     * @return
+     */
+    public Message getMessage(){
+        return mHandler.obtainMessage();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +117,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-
     /**
      * 释放资源
      */
@@ -149,11 +157,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         return activity;
     }
 
-    /**
-     * handler消息处理
-     * @param msg
-     */
-    public abstract boolean doMessage(Message msg);
 
     /** findViewById，在 onCreate中自动调用 */
     public abstract void findViewById();
@@ -172,6 +175,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /** 资源释放, 在finish中自动调用 */
     public abstract void release();
+
+    /**
+     * handler消息处理
+     * @param msg
+     */
+    public abstract boolean doMessage(Message msg);
 
 
 }
