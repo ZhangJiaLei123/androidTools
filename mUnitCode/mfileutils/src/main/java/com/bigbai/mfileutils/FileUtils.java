@@ -62,86 +62,28 @@ public class FileUtils
 
 	private static int length;
 	static String TAG = "文件操作";
-    public static String getPATH() {
-        return PATH;
-    }
 
-    private static String PATH;
 
 	/***
 	 * 写文本和写byte
 	 */
 	public static class Write{
-		/**
-		 * 写文本文件
-		 * 在Android系统中，文件保存在 /data/data/PACKAGE_NAME/files 目录下
-		 * @param context
+		/***
+		 * 写入byte[]
+		 * @param file
+		 * @param datas
+		 * @return
 		 */
-		public static String save(Context context, String fileName, String content)
-		{
-			if( content == null )	{content = "";}
-
-			try
-			{
-				FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-				fos.write( content.getBytes() );
-
-				fos.close();
-				return " /data/data/" +context.getPackageName() + "/files/" + fileName;
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-				return null;
-			}
-		}
-
-		/**
-		 * 写字节
-		 * Write byte.
-		 *
-		 * @param path    the path
-		 * @param content the content
-		 * @throws IOException the io exception
-		 */
-		public static boolean saveByte(@NonNull String path, @NonNull String content) {
-			return saveByte(new File(path), content);
-		}
-
-		/**
-		 * 写字节
-		 * Write byte.
-		 *
-		 * @param file    the file
-		 * @param content the content
-		 * @throws IOException the io exception
-		 */
-		public static boolean saveByte(@NonNull File file, @NonNull String content) {
-			if (file.isDirectory()) {
+		public static boolean save(@NonNull File file, @NonNull byte[] datas){
+			file = MFile.createFile(file);
+			if(file == null){
 				return false;
 			}
-			if (!file.exists()) {
-				try {
 
-					if(!file.getParentFile().exists()){
-						file.getParentFile().mkdir();
-					}
-
-					file = new File(file.getParentFile(),file.getName());
-
-					file.createNewFile();
-
-					if (!file.exists()){
-						return false;
-					}
-				} catch (Exception e) {
-				}
-			}
 			OutputStream out = null;
-			try { // FileOutputStream
+			try {
 				out = new FileOutputStream(file);
-				byte[] b = content.getBytes();
-				out.write(b);
+				out.write(datas);
 				out.close();
 				return true;
 			} catch (IOException e) {
@@ -152,115 +94,17 @@ public class FileUtils
 			} finally {
 				CloseableClose(out);
 			}
-		}
-
-
-		public  static boolean save2Sd(String filename, String filecontent) {
-			return save2Sd(filename,filecontent,false);
-		}
-
-		/**
-		 * 文件写入到 Sd 卡根目录
-		 * @param filename
-		 * @param filecontent
-		 * @param isAdd 是否追加
-		 * @return
-		 */
-		public  static boolean save2Sd(String filename, String filecontent, boolean isAdd) {
-			try {
-				//如果手机已插入sd卡,且app具有读写sd卡的权限
-				if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-					filename = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + filename;
-					//这里就不要用openFileOutput了,那个是往手机内存中写数据的
-					FileOutputStream output = new FileOutputStream(filename,isAdd);
-					output.write(filecontent.getBytes());
-					//将String字符串以字节流的形式写入到输出流中
-					output.close();
-					FileUtils.PATH = filename; // 保存路径到缓存
-					//关闭输出流
-					return true;
-				}
-			}catch (Exception e){
-				FileUtils.PATH = null;
-				return false;
-			}
-			FileUtils.PATH = null;
-			return false;
 
 		}
 
 		/**
-		 * 文件写入到 绝对路径
-		 * @param filePath
+		 * 文件写入，文件流
+		 * @param file
 		 * @param filecontent
 		 * @return
 		 */
-		public  static boolean save(String filePath, String filecontent) {
-			try {
-				//如果手机已插入sd卡,且app具有读写sd卡的权限
-				if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-					//filename = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + filename;
-					//这里就不要用openFileOutput了,那个是往手机内存中写数据的
-					FileOutputStream output = new FileOutputStream(filePath);
-					output.write(filecontent.getBytes());
-					//将String字符串以字节流的形式写入到输出流中
-					output.close();
-					//关闭输出流
-					return true;
-				}
-			}catch (Exception e){
-				return false;
-			}
-			return false;
-		}
-
-		/**
-		 * 向手机写图片
-		 * @param buffer
-		 * @param folder
-		 * @param fileName
-		 * @return
-		 */
-		public static boolean saveImage(byte[] buffer, String folder, String fileName )
-		{
-			boolean writeSucc = false;
-
-			boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
-
-			String folderPath = "";
-			if( sdCardExist )
-			{
-				folderPath = Environment.getExternalStorageDirectory() + File.separator +  folder + File.separator;
-			}
-			else
-			{
-				writeSucc =false;
-			}
-
-			File fileDir = new File(folderPath);
-			if(!fileDir.exists())
-			{
-				fileDir.mkdirs();
-			}
-
-			File file = new File( folderPath + fileName );
-			FileOutputStream out = null;
-			try
-			{
-				out = new FileOutputStream( file );
-				out.write(buffer);
-				writeSucc = true;
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-			finally
-			{
-				try {out.close();} catch (IOException e) {e.printStackTrace();}
-			}
-
-			return writeSucc;
+		public  static boolean save(File file, String filecontent) {
+			return save(file, filecontent.getBytes());
 		}
 
 	}
@@ -276,7 +120,7 @@ public class FileUtils
 		 * @param filename
 		 * @return
 		 */
-		public static byte[] getByte(String filename){
+		public static byte[] getBytes(String filename){
 			FileChannel fc = null;
 			byte[] result = null;
 			try {
@@ -311,7 +155,7 @@ public class FileUtils
 		 * @return
 		 * @throws IOException
 		 */
-		public static byte[] getByte(File file) throws IOException {
+		public static byte[] getBytes(File file) throws IOException {
 			File f = file;
 			if (!f.exists()) {
 				throw new FileNotFoundException("file not exists");
@@ -343,14 +187,14 @@ public class FileUtils
 		/**
 		 * 读取文本文件
 		 * @param context
-		 * @param fileName
+		 * @param file
 		 * @return
 		 */
-		public static String readText(Context context, String fileName )
+		public static String getStr(Context context, File file)
 		{
 			try
 			{
-				FileInputStream in = context.openFileInput(fileName);
+				FileInputStream in = context.openFileInput(file.getPath());
 				return readInStream(in);
 			}
 			catch (Exception e)
@@ -411,45 +255,43 @@ public class FileUtils
 
 		/**
 		 * 按行读文本
-		 * @param strFilePath
+		 * @param file
 		 * @return
 		 */
-		public static String readText(String strFilePath)
+		public static String getStrByLine(File file)
 		{
-			String path = strFilePath;
 			String content = ""; //文件内容字符串
-			//打开文件
-			File file = new File(path);
 			//如果path是传递过来的参数，可以做一个非目录的判断
 			if (file.isDirectory())
 			{
 				Log.d(TAG, "The File doesn't not exist.");
+				return null;
 			}
-			else
-			{
-				try {
-					InputStream instream = new FileInputStream(file);
-					if (instream != null)
-					{
-						InputStreamReader inputreader = new InputStreamReader(instream);
-						BufferedReader buffreader = new BufferedReader(inputreader);
-						String line;
-						//分行读取
-						while (( line = buffreader.readLine()) != null) {
-							content += line + "\n";
-						}
-						instream.close();
+			try {
+				InputStream instream = new FileInputStream(file);
+				if (instream != null)
+				{
+					InputStreamReader inputreader = new InputStreamReader(instream);
+					BufferedReader buffreader = new BufferedReader(inputreader);
+					String line;
+					//分行读取
+					while (( line = buffreader.readLine()) != null) {
+						content += line + "\n";
 					}
-				}
-				catch (java.io.FileNotFoundException e)
-				{
-					Log.d(TAG,  "The File doesn't not exist.");
-				}
-				catch (IOException e)
-				{
-					Log.d(TAG,  "error:" + e.getMessage());
+					instream.close();
 				}
 			}
+			catch (java.io.FileNotFoundException e)
+			{
+				Log.d(TAG,  "The File doesn't not exist.");
+				return null;
+			}
+			catch (IOException e)
+			{
+				Log.d(TAG,  "error:" + e.getMessage());
+				return null;
+			}
+
 			return content;
 		}
 
@@ -504,12 +346,17 @@ public class FileUtils
 			return strRes;
 		}
 
+		/**
+		 * 从文件流获取String
+		 * @param inStream
+		 * @return
+		 */
 		private static String readInStream(FileInputStream inStream)
 		{
 			try
 			{
 				ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-				byte[] buffer = new byte[512];
+				byte[] buffer = new byte[1024];
 				int length = -1;
 				while((length = inStream.read(buffer)) != -1 )
 				{
@@ -534,6 +381,33 @@ public class FileUtils
 	 * 文件操作
 	 */
 	public static class MFile{
+
+
+		public static File createFile(File file){
+			if (file.isDirectory()) {
+				return null;
+			}
+			if (!file.exists()) {
+				try {
+
+					if(!file.getParentFile().exists()){
+						file.getParentFile().mkdirs();
+					}
+
+					file = new File(file.getParentFile(),file.getName());
+
+					file.createNewFile();
+
+					if (!file.exists()){
+						return null;
+					}
+				} catch (Exception e) {
+					return null;
+				}
+			}
+
+			return file;
+		}
 
 		public static File createFile( String folderPath, String fileName )
 		{

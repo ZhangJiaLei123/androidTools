@@ -1,8 +1,13 @@
 package com.bigbai.mimage;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * @brief：对文件的简述
@@ -69,4 +74,122 @@ public class ImageTool {
             return false;
         }
     }
+
+    /**
+     * 从文件获取Bitmap
+     * @param imageFile
+     * @return
+     */
+    public Bitmap getBitmap(File imageFile){
+        return BitmapFactory.decodeFile(imageFile.getPath());
+    }
+
+    /**
+     * 保存图片 Bitmap
+     * @param imageFile
+     * @param mBitmap
+     */
+    public  boolean saveBitmap(File imageFile, Bitmap mBitmap) {
+        if(imageFile.exists()){
+            imageFile.delete();
+        }
+        else{
+            try {
+                imageFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        FileOutputStream fOut = null;
+        try {
+            fOut = new FileOutputStream(imageFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+
+        try {
+            fOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        try {
+            fOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+
+    /**
+     * 保存图片 byte[]
+     * @param buffer
+     * @param fileImage
+     * @return
+     */
+    public static boolean saveImage(byte[] buffer, File fileImage)
+    {
+        boolean writeSucc = false;
+        fileImage = createFile(fileImage);
+
+        if(fileImage == null){
+            return false;
+        }
+
+        FileOutputStream out = null;
+        try
+        {
+            out = new FileOutputStream( fileImage );
+            out.write(buffer);
+            writeSucc = true;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try {out.close();} catch (IOException e) {e.printStackTrace();}
+        }
+
+        return writeSucc;
+    }
+
+    /**
+     * 创建文件
+     * @param file
+     * @return
+     */
+    public static File createFile(File file){
+        if (file.isDirectory()) {
+            return null;
+        }
+        if (!file.exists()) {
+            try {
+
+                if(!file.getParentFile().exists()){
+                    file.getParentFile().mkdirs();
+                }
+
+                file = new File(file.getParentFile(),file.getName());
+
+                file.createNewFile();
+
+                if (!file.exists()){
+                    return null;
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        return file;
+    }
+
 }
