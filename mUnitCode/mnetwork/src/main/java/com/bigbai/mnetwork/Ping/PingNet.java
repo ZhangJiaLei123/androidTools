@@ -50,7 +50,9 @@ public class PingNet {
             }
             successReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             while ((line = successReader.readLine()) != null) {
-                if (isLog) Log.i(TAG, line);
+                if (isLog) {
+                    Log.i(TAG, line);
+                }
                 append(pingNetEntity.getResultBuffer(), line);
                 String time;
                 if ((time = getTime(line)) != null) {
@@ -59,23 +61,35 @@ public class PingNet {
             }
             int status = process.waitFor();
             if (status == 0) {
-                if (isLog) Log.i(TAG, "exec cmd success:" + command);
+                if (isLog) {
+                    Log.i(TAG, "exec cmd success:" + command);
+                }
                 append(pingNetEntity.getResultBuffer(), "exec cmd success:" + command);
                 pingNetEntity.setResult(true);
             } else {
-                if (isLog) Log.e(TAG, "exec cmd fail.");
+                if (isLog){
+                    Log.e(TAG, "exec cmd fail.");
+                }
                 append(pingNetEntity.getResultBuffer(), "exec cmd fail.");
                 pingNetEntity.setPingTime(null);
                 pingNetEntity.setResult(false);
             }
-            if (isLog) Log.i(TAG, "exec finished.");
+            if (isLog){
+                Log.i(TAG, "exec finished.");
+            }
             append(pingNetEntity.getResultBuffer(), "exec finished.");
         } catch (IOException e) {
-            if (isLog) Log.e(TAG, String.valueOf(e));
+            if (isLog) {
+                Log.e(TAG, String.valueOf(e));
+            }
         } catch (InterruptedException e) {
-            if (isLog) Log.e(TAG, String.valueOf(e));
+            if (isLog) {
+                Log.e(TAG, String.valueOf(e));
+            }
         } finally {
-            if (isLog) Log.i(TAG, "ping exit.");
+            if (isLog){
+                Log.i(TAG, "ping exit.");
+            }
             if (process != null) {
                 process.destroy();
             }
@@ -87,7 +101,9 @@ public class PingNet {
                 }
             }
         }
-        if (isLog) Log.i(TAG, pingNetEntity.getResultBuffer().toString());
+        if (isLog) {
+            Log.i(TAG, pingNetEntity.getResultBuffer().toString());
+        }
         return pingNetEntity;
     }
 
@@ -101,11 +117,14 @@ public class PingNet {
         String[] lines = line.split("\n");
         String time = null;
         for (String l : lines) {
-            if (!l.contains("time="))
+            if (!l.contains("time=")) {
                 continue;
+            }
             int index = l.indexOf("time=");
             time = l.substring(index + "time=".length());
-            if (isLog) Log.i(TAG, time);
+            if (isLog){
+                Log.i(TAG, time);
+            }
         }
         return time;
     }

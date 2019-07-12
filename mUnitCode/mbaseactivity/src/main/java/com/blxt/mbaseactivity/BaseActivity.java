@@ -28,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     };
 
+
     /***
      * 从消息池获取消息，避免大量新建对象带来的资源浪费
      * @return

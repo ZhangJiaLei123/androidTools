@@ -157,6 +157,46 @@ public class Tool {
         }
         return n;
     }
+
+    public static final int MODEL_B = 0;
+    public static final int MODEL_KB = 1;
+    public static final int MODEL_MB = 2;
+    public static final int MODEL_GB = 3;
+    public static final int MODEL_TB = 4;
+    /**
+     * 格式化内存单位
+     *
+     * @param size 大小
+     * @return
+     */
+    public static String getFormatSize(double size, int model) {
+        double kiloByte = size / 1024;
+
+        if ((kiloByte < 1 && model == -1) || model == MODEL_B) {
+            return size + "Byte";
+        }
+
+        double megaByte = kiloByte / 1024;
+        if ((megaByte < 1 && model == -1) || model == MODEL_KB) {
+            BigDecimal result1 = BigDecimal.valueOf(kiloByte);
+            return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
+        }
+
+        double gigaByte = megaByte / 1024;
+        if ((gigaByte < 1 && model == -1) || model == MODEL_MB) {
+            BigDecimal result2 = BigDecimal.valueOf(megaByte);
+            return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
+        }
+
+        double teraBytes = gigaByte / 1024;
+        if ((teraBytes < 1 && model == -1) || model == MODEL_GB ) {
+            BigDecimal result3 = BigDecimal.valueOf(gigaByte);
+            return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";
+        }
+        BigDecimal result4 = BigDecimal.valueOf(teraBytes);
+        return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
+    }
+
     /**
      * 格式化内存单位
      *
@@ -164,31 +204,7 @@ public class Tool {
      * @return
      */
     public static String getFormatSize(double size) {
-        double kiloByte = size / 1024;
-        if (kiloByte < 1) {
-            return size + "Byte";
-        }
-
-        double megaByte = kiloByte / 1024;
-        if (megaByte < 1) {
-            BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));
-            return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
-        }
-
-        double gigaByte = megaByte / 1024;
-        if (gigaByte < 1) {
-            BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
-            return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
-        }
-
-        double teraBytes = gigaByte / 1024;
-        if (teraBytes < 1) {
-            BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));
-            return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";
-        }
-        BigDecimal result4 = new BigDecimal(teraBytes);
-        return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
+        return getFormatSize(size, -1);
     }
-
 
 }
