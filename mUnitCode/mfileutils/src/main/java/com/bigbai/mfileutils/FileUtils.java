@@ -120,14 +120,13 @@ public class FileUtils
 		 * @param filename
 		 * @return
 		 */
-		public static byte[] getBytes(String filename){
+		public static byte[] getBytesFormAccess(String filename){
 			FileChannel fc = null;
 			byte[] result = null;
 			try {
 				fc = new RandomAccessFile(filename, "r").getChannel();
 				MappedByteBuffer byteBuffer = fc.map(FileChannel.MapMode.READ_ONLY, 0,
 						fc.size()).load();
-				System.out.println(byteBuffer.isLoaded());
 				result = new byte[(int) fc.size()];
 				if (byteBuffer.remaining() > 0) {
 					// System.out.println("remain");
@@ -706,12 +705,12 @@ public class FileUtils
 
 	/**
 	 * 追加
-	 * Add byte.
+	 * Add String.
 	 *
 	 * @param fileName the file
 	 * @param content  the content
 	 */
-	public static boolean addByte(@NonNull File fileName, @NonNull String content) {
+	public static boolean addStr(@NonNull File fileName, @NonNull String content) {
 		if (!fileName.isFile()) {
 			return false;
 		}
@@ -757,7 +756,7 @@ public class FileUtils
 	 * @param file the file
 	 * @return the string
 	 */
-	public static String readFile(@NonNull File file) {
+	public static String readStr(@NonNull File file) {
 
 		if (!file.isFile()) {
 			return "";
@@ -771,7 +770,7 @@ public class FileUtils
 		}
 		Long filelength = file.length();     //获取文件长度
 		if (filelength > Integer.MAX_VALUE) {
-			return readFileByLines(file);
+			return readStrByLines(file);
 		}
 		byte[] filecontent = new byte[filelength.intValue()];
 		FileInputStream in = null;
@@ -794,7 +793,7 @@ public class FileUtils
 	 * @param file the file
 	 * @return the string
 	 */
-	public static String readFileByLines(@NonNull File file) {
+	public static String readStrByLines(@NonNull File file) {
 		if (!file.isFile()) {
 			return "";
 		}
@@ -896,27 +895,6 @@ public class FileUtils
 		return savedir;
 	}
 
-	/**
-	 * 获取文件目录
-	 *
-	 * @param context the mContext
-	 * @return file
-	 */
-	public static String getFile(@NonNull Context context) {
-		File savedir = null;
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-			savedir = context.getExternalFilesDir(null);
-		}
-
-		if (savedir == null) {
-			savedir = context.getFilesDir();
-		}
-
-		if (!savedir.exists()) {
-			savedir.mkdirs();
-		}
-		return savedir.getAbsolutePath();
-	}
 
 	/**
 	 * Gets root path.
