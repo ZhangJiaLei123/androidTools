@@ -32,7 +32,7 @@ public class HNtools {
     /**
      * 隐藏虚拟按键，并且全屏,全系统适用
      */
-    public boolean hideNavigation(){
+    public static boolean hideNavigation(){
         boolean ishide;
         try
         {

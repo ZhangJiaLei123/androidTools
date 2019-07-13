@@ -40,8 +40,8 @@ uploadArchives {
         def mavenDirPath = file('E:\\MyComputer\\Documents\\workSpace\\Android\\library\\mMavenModule')
         repository(url: "file://${mavenDirPath.absolutePath}")
         pom.project {
-            groupId "com.bigbai.mheneng"
-            artifactId "mheneng"
+            groupId "com.bigbai.heneng"
+            artifactId "heneng"
             version "1.0.0"
         }
     }
