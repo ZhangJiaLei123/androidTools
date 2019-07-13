@@ -3,12 +3,12 @@
   <groupId>com.bigbai.mfileutils</groupId>
   <artifactId>mfileutils</artifactId>
   <versioning>
-    <release>1.0.2</release>
+    <release>1.0.0</release>
     <versions>
       <version>1.0.0</version>
       <version>1.0.1</version>
       <version>1.0.2</version>
     </versions>
-    <lastUpdated>20190623064608</lastUpdated>
+    <lastUpdated>20190713094038</lastUpdated>
   </versioning>
 </metadata>
