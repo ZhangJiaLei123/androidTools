@@ -46,7 +46,7 @@ public abstract class BaseAppConfig {
         rootS.upSubElement(element); // 更新本机信息
 
         // 每次重新保存
-        FileUtils.writeByte(new File(configPath), rootS.toString().trim());
+        FileUtils.Write.save(new File(configPath), rootS.toString().trim());
     }
 
     public void initConfig(){
@@ -68,7 +68,7 @@ public abstract class BaseAppConfig {
             rootS = new Element(cLoack, 0, 0);
             float vSd = Float.parseFloat(rootS.getKeyvalue("version"));
 
-            String sAa = FileUtils.readFileFromAssets(context, assetsFile);
+            String sAa = FileUtils.Read.getStr4Assets(context, assetsFile);
             Element elementAa = new Element(sAa, 0, 0);
 
             float vAa = Float.parseFloat(elementAa.getKeyvalue("version"));
@@ -82,7 +82,7 @@ public abstract class BaseAppConfig {
 
         // 重新获取Element
         if(rootS == null){
-            String sAa = FileUtils.readFileFromAssets(context, assetsFile);
+            String sAa = FileUtils.Read.getStr4Assets(context, assetsFile);
             rootS = new Element(sAa, 0, 0);
         }
 
@@ -144,7 +144,7 @@ public abstract class BaseAppConfig {
      * @return
      */
     public boolean saveConfigContent(Context context){
-        return FileUtils.writeByte(configFile, rootS.toString());
+        return FileUtils.Write.save(configFile, rootS.toString());
     }
 
     /**
@@ -152,7 +152,7 @@ public abstract class BaseAppConfig {
      * @return
      */
     public boolean saveConfigContent(String str){
-        return FileUtils.writeByte(configFile, str);
+        return FileUtils.Write.save(configFile, str);
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class BaseAppConfig {
      * @return
      */
     public boolean saveConfigContent(){
-        return FileUtils.writeByte(configFile, rootS.toString().trim());
+        return FileUtils.Write.save(configFile, rootS.toString().trim());
     }
 
     /**
@@ -168,7 +168,7 @@ public abstract class BaseAppConfig {
      * @return
      */
     public String getConfigContent(){
-        return FileUtils.readFile(configFile);
+        return FileUtils.Read.getStrByLine(configFile);
     }
 
     /**

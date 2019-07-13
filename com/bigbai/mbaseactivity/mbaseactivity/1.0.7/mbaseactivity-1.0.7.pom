@@ -28,7 +28,7 @@
     <dependency>
       <groupId>com.bigbai.mfileutils</groupId>
       <artifactId>mfileutils</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.4</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -40,7 +40,7 @@
     <dependency>
       <groupId>com.bigbai.mDebug</groupId>
       <artifactId>mDebug</artifactId>
-      <version>1.0.4</version>
+      <version>1.0.5</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
