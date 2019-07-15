@@ -64,13 +64,13 @@ public class BaseApplication extends Application {
      *
      **********************************************************************************************/
     /** 可以实现循环或延迟任务的线程池 */
-    ScheduledExecutorService scheduledExecutorService = null;
+    public ScheduledExecutorService scheduledExecutorService = null;
     /** 回收型线程池 */
-    ExecutorService cachedThreadPool = null;
+    public ExecutorService cachedThreadPool = null;
     /** 可控最大并发数线程池 */
-    ExecutorService fixedThreadPool = null;
+    public ExecutorService fixedThreadPool = null;
     /** 单线程池 */
-    ExecutorService singleThreadExecutor = null;
+    public ExecutorService singleThreadExecutor = null;
 
     /**
      * 初始化单线程池

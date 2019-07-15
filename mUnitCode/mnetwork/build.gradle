@@ -39,7 +39,7 @@ uploadArchives {
         pom.project {
             groupId "com.bigbai.mnetwork"
             artifactId "mnetwork"
-            version "1.0.2"
+            version "1.0.3"
         }
     }
 }

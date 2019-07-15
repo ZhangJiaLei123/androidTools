@@ -74,6 +74,31 @@ public class MUdpClient {
         }).start();
     }
 
+    /***
+     * 简易发送
+     * @param ip        目标IP
+     * @param port      端口
+     * @param msg       消息
+     */
+    public void send(final String ip,final  int port,final byte[] msg){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    DatagramSocket socket = new DatagramSocket(port);
+                    InetAddress serverAddress = InetAddress.getByName(ip);
+                    DatagramPacket packet = new DatagramPacket( msg, msg.length, serverAddress, port);
+                    socket.send(packet);
+                    socket.close();
+                }catch (Exception e){
+                    //LOG.e("发送UDP失败", ip + "->" + msg);
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+    }
+
     /**
      *  接收指定长度的字节
      * @param leng

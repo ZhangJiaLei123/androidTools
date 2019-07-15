@@ -16,7 +16,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Activity activity;
     protected static String TAG;
     protected static ViewHolder viewHolder; // ui管理
-    Application application;                // Application单例A
+    public Application application;         // Application单例A
 
     @SuppressLint("HandlerLeak")
     public Handler mHandler=new Handler(){

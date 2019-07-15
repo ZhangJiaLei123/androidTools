@@ -1,9 +1,11 @@
 package com.bigbai.mfileutils;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -423,7 +425,7 @@ public class FileUtils
 		 * @param filePath
 		 * @return
 		 */
-		public static String getFileName( String filePath )
+		public static String getFileName(String filePath )
 		{
 			if( filePath.isEmpty() )	{
 				return "";
@@ -919,26 +921,25 @@ public class FileUtils
 	 * 从Assets文件夹复制文件到SD卡
 	 * @param context
 	 * @param sourceFileName        源文件路径
-	 * @param targetFileName        目标路径
+	 * @param targetFile            目标文件
 	 * @return
 	 */
-	public static boolean copyFileFromAsstes(Context context, String sourceFileName, String targetFileName){
+	public static boolean copyFileFromAsstes(Context context, String sourceFileName, File targetFile ){
 		//创建解压目标目录 
-		File file = new File(targetFileName);
 		InputStream input = null;
 		OutputStream output = null;
 		try {
 			//如果目标目录不存在，则创建 
-			File fp = file.getParentFile();
+			File fp = targetFile.getParentFile();
 			if(!fp.exists()){
 				fp.mkdir();
 			}
-			if (!file.exists()) {
-				file.createNewFile();
+			if (!targetFile.exists()) {
+				targetFile.createNewFile();
 			}
 			//打开资源文件 
 			input = context.getAssets().open(sourceFileName);
-			output = new FileOutputStream(targetFileName);
+			output = new FileOutputStream(targetFile);
 			int temp;
 			while ((temp = input.read()) != (-1)) {
 				output.write(temp);
