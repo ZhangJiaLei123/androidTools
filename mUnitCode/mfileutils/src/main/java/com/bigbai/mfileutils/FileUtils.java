@@ -109,6 +109,42 @@ public class FileUtils
 			return save(file, filecontent.getBytes());
 		}
 
+		public static boolean add(@NonNull File fileName, @NonNull byte[] datas) {
+			if (!fileName.isFile()) {
+				return false;
+			}
+
+			OutputStream out = null;
+			try {
+				if(!fileName.exists()){
+					fileName.createNewFile();
+				}
+				out = new FileOutputStream(fileName, true);
+				for (int i = 0; i < datas.length; i++) {
+					out.write(datas[i]);
+				}
+				return true;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			} catch (Exception e) {
+				return false;
+			} finally {
+				CloseableClose(out);
+			}
+		}
+
+		/**
+		 * 追加
+		 * Add String.
+		 *
+		 * @param fileName the file
+		 * @param content  the content
+		 */
+		public static boolean add(@NonNull File fileName, @NonNull String content) {
+			return add(fileName, content.getBytes());
+		}
+
 	}
 
 	/**
@@ -374,6 +410,34 @@ public class FileUtils
 			}
 			return null;
 		}
+
+
+		/**
+		 * 按行读取
+		 * Read file by lines string.
+		 *
+		 * @param file the file
+		 * @return the string
+		 */
+		public static String readStrByLines(@NonNull File file) {
+			BufferedReader reader = null;
+			StringBuilder builder = new StringBuilder();
+			try {
+				reader = new BufferedReader(new FileReader(file));
+				String tempString;
+				while ((tempString = reader.readLine()) != null) {
+					builder.append(tempString);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+			} finally {
+				CloseableClose(reader);
+			}
+
+			return builder.toString();
+		}
+
 
 	}
 
@@ -703,41 +767,6 @@ public class FileUtils
 
 	}
 
-
-
-	/**
-	 * 追加
-	 * Add String.
-	 *
-	 * @param fileName the file
-	 * @param content  the content
-	 */
-	public static boolean addStr(@NonNull File fileName, @NonNull String content) {
-		if (!fileName.isFile()) {
-			return false;
-		}
-
-		OutputStream out = null;
-		try {
-			if(!fileName.exists()){
-				fileName.createNewFile();
-			}
-			out = new FileOutputStream(fileName, true);
-			byte[] b = content.getBytes();
-			for (int i = 0; i < b.length; i++) {
-				out.write(b[i]);
-			}
-			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		} catch (Exception e) {
-			return false;
-		} finally {
-			CloseableClose(out);
-		}
-	}
-
 	public static byte[] toBytes(InputStream in) throws IOException 
 	{
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -751,71 +780,6 @@ public class FileUtils
 	    return buffer;
 	}
 
-	/**
-	 * 读取文件，一次性读取
-	 * Read file string.
-	 *
-	 * @param file the file
-	 * @return the string
-	 */
-	public static String readStr(@NonNull File file) {
-
-		if (!file.isFile()) {
-			return "";
-		}
-		if(file.exists()){
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		Long filelength = file.length();     //获取文件长度
-		if (filelength > Integer.MAX_VALUE) {
-			return readStrByLines(file);
-		}
-		byte[] filecontent = new byte[filelength.intValue()];
-		FileInputStream in = null;
-		try {
-			in = new FileInputStream(file);
-			in.read(filecontent);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-		} finally {
-			CloseableClose(in);
-		}
-		return new String(filecontent);
-	}
-
-	/**
-	 * 按行读取
-	 * Read file by lines string.
-	 *
-	 * @param file the file
-	 * @return the string
-	 */
-	public static String readStrByLines(@NonNull File file) {
-		if (!file.isFile()) {
-			return "";
-		}
-		BufferedReader reader = null;
-		StringBuilder builder = new StringBuilder();
-		try {
-			reader = new BufferedReader(new FileReader(file));
-			String tempString;
-			while ((tempString = reader.readLine()) != null) {
-				builder.append(tempString);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-		} finally {
-			CloseableClose(reader);
-		}
-
-		return builder.toString();
-	}
 
 	/**
 	 * 检查文件是否存在
@@ -959,8 +923,6 @@ public class FileUtils
 	public static boolean copyFolder(@NonNull String oldPath, @NonNull String newPath) {
 		return copyFolder(new File(oldPath), new File(newPath));
 	}
-
-
 
 	/**
 	 * 获取文件夹大小

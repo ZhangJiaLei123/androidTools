@@ -15,10 +15,14 @@ import com.bigbai.mnetwork.Ping.PingNet;
 import com.bigbai.mnetwork.Ping.PingNetEntity;
 
 import java.io.IOException;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 
 /***
  *  检查网络状态工具
@@ -26,6 +30,36 @@ import java.net.UnknownHostException;
  * */
 public class NetTools {
 
+	/**
+	 * 获取ip地址
+	 * @return
+	 */
+	public static String getHostIP() {
+
+		String hostIp = "未接入网络";
+		try {
+			Enumeration nis = NetworkInterface.getNetworkInterfaces();
+			InetAddress ia = null;
+			while (nis.hasMoreElements()) {
+				NetworkInterface ni = (NetworkInterface) nis.nextElement();
+				Enumeration<InetAddress> ias = ni.getInetAddresses();
+				while (ias.hasMoreElements()) {
+					ia = ias.nextElement();
+					if (ia instanceof Inet6Address) {
+						continue;// skip ipv6
+					}
+					String ip = ia.getHostAddress();
+					if (!"127.0.0.1".equals(ip)) {
+						hostIp = ia.getHostAddress();
+						break;
+					}
+				}
+			}
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+		return hostIp;
+	}
 	/**
 	 * ping工具
 	 * @param hostIp	IP

@@ -9,13 +9,12 @@ import android.text.Editable;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import org.w3c.dom.Text;
-
 import static android.content.Context.MODE_PRIVATE;
 
 
 /**
  * 重写EditText,自动记内容，下次自动填充
+ * 更具Tag或Id进行数据保存
  * @author: Zhang
  * @date: 2019/7/1 - 15:13
  * @note Created by com.bigbai.mview.mTextView.
@@ -58,10 +57,12 @@ public class RememberTextView extends EditText {
         }
         SP = context.getSharedPreferences(context.getPackageName() + "_preferences", MODE_PRIVATE);
         String text = super.getText().toString();
-        int id = getId();
-        String textValue = SP.getString("_RememberTextView_" + id , text);
+        String key = getTag().toString();
+        if(key == null || !key.isEmpty()){
+            key = getId() + "";
+        }
+        String textValue = SP.getString("_RememberTextView_" + key , text);
         super.setText(textValue);
-
     }
 
 
@@ -71,9 +72,7 @@ public class RememberTextView extends EditText {
      */
     public void setText(String text){
         super.setText(text);
-        if(SP != null) {
-            SP.edit().putString("_RememberTextView_" + getId(), text).commit();
-        }
+        saveValue(text);
     }
 
 
@@ -85,12 +84,20 @@ public class RememberTextView extends EditText {
     public Editable getText(){
 
         Editable editable =  super.getText();
-        if(SP != null)
-        {
-            SP.edit().putString("_RememberTextView_" + getId(), editable.toString()).commit();
-        }
+        saveValue(editable.toString());
 
         return super.getText();
+    }
+
+
+    public void saveValue(String value){
+        String key = getTag().toString();
+        if(key == null || !key.isEmpty()){
+            key = getId() + "";
+        }
+        if(SP != null) {
+            SP.edit().putString( "_RememberTextView_" + key , value).commit();
+        }
     }
 
 }
