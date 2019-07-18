@@ -26,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            doNotice(msg);
+            doMessage(msg);
             msg.recycle(); // 释放消息
         }
     };
@@ -192,6 +192,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     /** 资源释放, 在finish中自动调用 */
     public abstract void release();
 
+    /** 获取权限后的操作 */
+    public abstract void onPermission();
 
     /**
      * handler消息处理

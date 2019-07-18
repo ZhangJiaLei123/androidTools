@@ -37,9 +37,7 @@ dependencies {
     implementation files('libs/org.apache.commons.lang3_3.1.0.v201403281430.jar')
     implementation files('libs/com.blxt.xmltool.jar')
 
-    //implementation 'com.bigbai.mfileutils:mfileutils:1.0.5'
-    //implementation 'com.bigbai.mview:mview:1.0.7'
-    implementation 'com.bigbai.mDebug:mDebug:1.0.5'
+    implementation 'com.bigbai.mDebug:mDebug:1.0.6'
 
 }
 
