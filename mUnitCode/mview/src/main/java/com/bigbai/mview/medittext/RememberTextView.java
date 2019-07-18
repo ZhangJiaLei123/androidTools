@@ -57,11 +57,7 @@ public class RememberTextView extends EditText {
         }
         SP = context.getSharedPreferences(context.getPackageName() + "_preferences", MODE_PRIVATE);
         String text = super.getText().toString();
-        String key = getTag().toString();
-        if(key == null || !key.isEmpty()){
-            key = getId() + "";
-        }
-        String textValue = SP.getString("_RememberTextView_" + key , text);
+        String textValue = SP.getString( getKey() , text);
         super.setText(textValue);
     }
 
@@ -91,13 +87,18 @@ public class RememberTextView extends EditText {
 
 
     public void saveValue(String value){
-        String key = getTag().toString();
-        if(key == null || !key.isEmpty()){
-            key = getId() + "";
-        }
         if(SP != null) {
-            SP.edit().putString( "_RememberTextView_" + key , value).commit();
+            SP.edit().putString(getKey() , value).commit();
         }
     }
 
+    public String getKey(){
+        String key = getTag().toString();
+        if(key == null || key.trim().length() <= 0){
+            key = getId() + "";
+        }
+
+        return "_RememberTextView_" + key;
+    }
 }
+

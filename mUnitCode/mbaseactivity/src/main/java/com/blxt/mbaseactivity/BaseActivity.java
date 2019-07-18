@@ -12,22 +12,37 @@ import android.support.v7.app.AppCompatActivity;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
+
     private Context context;
     private Activity activity;
     protected static String TAG;
-    protected static ViewHolder viewHolder; // ui管理
     public Application application;         // Application单例A
 
+    /**
+     * 工作Handler
+     */
     @SuppressLint("HandlerLeak")
     public Handler mHandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            doMessage(msg);
+            doNotice(msg);
             msg.recycle(); // 释放消息
         }
     };
 
+    /**
+     * 通知Handler
+     */
+    @SuppressLint("HandlerLeak")
+    public Handler noticeHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            doNotice(msg);
+            msg.recycle(); // 释放消息
+        }
+    };
 
     /***
      * 从消息池获取消息，避免大量新建对象带来的资源浪费
@@ -177,11 +192,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     /** 资源释放, 在finish中自动调用 */
     public abstract void release();
 
+
     /**
      * handler消息处理
      * @param msg
      */
     public abstract boolean doMessage(Message msg);
+
+    /**
+     * handler消息处理
+     * @param msg
+     */
+    public abstract boolean doNotice(Message msg);
 
 
 }

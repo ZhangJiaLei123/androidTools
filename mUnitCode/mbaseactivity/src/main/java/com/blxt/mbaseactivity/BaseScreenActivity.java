@@ -124,7 +124,7 @@ public abstract class BaseScreenActivity extends BaseActivity{
     };
 
     @Override
-    public boolean doMessage(Message msg){
+    public boolean doNotice(Message msg){
         switch (msg.what)
         {
             case MSGID_OPEN_SCREENSAVER:

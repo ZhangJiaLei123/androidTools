@@ -5,7 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import com.bigbai.mfileutils.FileUtils;
 import com.blxt.xmltool.EConfigBase;
 import com.blxt.xmltool.Element;
 import com.blxt.xmltool.ElementTool;
@@ -121,7 +120,8 @@ public abstract class BaseAppConfig {
     private boolean copyConfig(){
         if(!FileUtils.copyFileFromAsstes(context,
                 assetsFile,
-                configFile.getPath())) {
+                configFile
+        )) {
             Log.e("AppConfig", "复制配置文件失败");
             return false;
         }
