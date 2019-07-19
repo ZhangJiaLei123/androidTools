@@ -75,7 +75,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instances = this;
-        resource =  context.getResources();
+        resource = getResources();
         sysInfo = new SysInfo();
 
         initSharedPreferences();
@@ -208,36 +208,41 @@ public class BaseApplication extends Application {
     }
 
 
-    /**
-     * 根据资源返回String值
-     *
-     * @param id 资源id
-     * @return String
-     */
-    public static String string(int id) {
-        return resource.getString(id);
-    }
 
-    /**
-     * 根据资源返回color值
-     *
-     * @param id 资源id
-     * @return int类型的color
-     */
-    public static int color(int id) {
-        return resource.getColor(id);
-    }
 
-    /**
-     * 根据资源返回Drawable值
-     *
-     * @param id 资源id
-     * @return Drawable
-     */
-    public static Drawable drawable(int id) {
-        return resource.getDrawable(id);
-    }
+    public static class ResourcesTools
+    {
+        /**
+         * 根据资源返回String值
+         *
+         * @param id 资源id
+         * @return String
+         */
+        public static String string(int id) {
+            return resource.getString(id);
+        }
 
+        /**
+         * 根据资源返回color值
+         *
+         * @param id 资源id
+         * @return int类型的color
+         */
+        public static int color(int id) {
+            return resource.getColor(id);
+        }
+
+        /**
+         * 根据资源返回Drawable值
+         *
+         * @param id 资源id
+         * @return Drawable
+         */
+        public static Drawable drawable(int id) {
+            return resource.getDrawable(id);
+        }
+
+    }
 
     public class SysInfo{
 
