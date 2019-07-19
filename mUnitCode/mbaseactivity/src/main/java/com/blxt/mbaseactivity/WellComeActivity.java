@@ -34,9 +34,9 @@ public abstract class WellComeActivity extends BaseActivity {
         runnable = new Runnable() {
             @Override
             public void run() {
-                if(isSpik) {
-                    finish();
-                }
+                workThread();
+
+                finish();
             }
         };
 
@@ -45,5 +45,6 @@ public abstract class WellComeActivity extends BaseActivity {
         thread.start();
     }
 
+    public abstract boolean workThread();
 
 }
