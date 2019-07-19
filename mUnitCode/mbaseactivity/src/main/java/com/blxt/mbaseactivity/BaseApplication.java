@@ -7,6 +7,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
@@ -45,6 +47,9 @@ public class BaseApplication extends Application {
      * 单例对象
      */
     public static BaseApplication instances;
+    static Context context;
+    static Resources resource;
+
     SysInfo sysInfo;
     /**
      * MainActivity的Handler
@@ -62,15 +67,21 @@ public class BaseApplication extends Application {
         return instances;
     }
 
+    public static synchronized Context context() {
+        return context;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         instances = this;
+        resource =  context.getResources();
         sysInfo = new SysInfo();
 
         initSharedPreferences();
 
     }
+
 
     /**
      * 初始化 SharedPreferences
@@ -84,8 +95,8 @@ public class BaseApplication extends Application {
         _icountRunTimces = g_appInfo.getInt("AppInfo_运行次数_",-1);
         // 然后写入
         g_appInfo.edit().putInt("AppInfo_运行次数_", _icountRunTimces + 1).commit();
-        g_appInfo.edit().putString("AppInfo_上次运行时间_", Calendar.getInstance().getTime().getTime() + "").commit();
-        g_appInfo.edit().putString("AppInfo_设备码", sysInfo.getOnlyId() ).commit();
+        g_appInfo.edit().putString("AppInfo_运行启动时间_", Calendar.getInstance().getTime().getTime() + "").apply();
+        g_appInfo.edit().putString("AppInfo_设备码", sysInfo.getOnlyId() ).apply();
 
     }
 
@@ -192,7 +203,39 @@ public class BaseApplication extends Application {
             singleThreadExecutor.shutdownNow();
         }
 
-        g_appInfo.edit().putString("AppInfo_上次结束时间_", Calendar.getInstance().getTime().getTime() + "").commit();
+        g_appInfo.edit().putString("AppInfo_结束时间_", Calendar.getInstance().getTime().getTime() + "").commit();
+        ActivityManager.getInstance().finishAllActivity();
+    }
+
+
+    /**
+     * 根据资源返回String值
+     *
+     * @param id 资源id
+     * @return String
+     */
+    public static String string(int id) {
+        return resource.getString(id);
+    }
+
+    /**
+     * 根据资源返回color值
+     *
+     * @param id 资源id
+     * @return int类型的color
+     */
+    public static int color(int id) {
+        return resource.getColor(id);
+    }
+
+    /**
+     * 根据资源返回Drawable值
+     *
+     * @param id 资源id
+     * @return Drawable
+     */
+    public static Drawable drawable(int id) {
+        return resource.getDrawable(id);
     }
 
 

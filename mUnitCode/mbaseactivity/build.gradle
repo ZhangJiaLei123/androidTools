@@ -8,7 +8,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -48,7 +48,7 @@ uploadArchives {
         pom.project {
             groupId "com.bigbai.mbaseactivity"
             artifactId "mbaseactivity"
-            version "1.0.8"
+            version "1.0.9"
         }
     }
 }

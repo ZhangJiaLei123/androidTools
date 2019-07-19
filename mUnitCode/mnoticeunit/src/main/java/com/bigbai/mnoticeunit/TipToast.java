@@ -14,14 +14,20 @@ import android.widget.Toast;
  *
  */
 public class TipToast{
+	public static final int GRAVITY_TOP = 1;
+	public static final int GRAVITY_BOTTOM = 2;
+	public static final int GRAVITY_CENTER = 3;
+
+	public static final int TIME_SHORT = Toast.LENGTH_SHORT;
+	public static final int TIME_LONG = Toast.LENGTH_LONG;
 	/**
 	 *
 	 * @param resourceId 传入的布局
 	 * @param context  上下文
-	 * @param state  设置该布局的位置在 （1111：最上边， 2222：最下边， 3333：最中间）
-	 * @param date  设置Toast显示时间长短（1101：长， 1102：短）
+	 * @param state    设置该布局的位置在@see TipToast
+	 * @param timeModel  显示时间长短。@see TipToast
 	 */
-	public static void showToast(int resourceId, Context context, String state, String date) {
+	public static void showToast(int resourceId, Context context, int state, int timeModel) {
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View toastView = inflater.inflate(resourceId, null);
 			toastView.setBackgroundColor(Color.TRANSPARENT);
@@ -29,51 +35,41 @@ public class TipToast{
 	    if (mToast == null) {
 	        mToast = new Toast(context);
 	        mToast.setView(toastView);
-	        if(state.equals("TOP"))
+	        if(state == TipToast.GRAVITY_TOP)
 	        {
 	        	mToast.setGravity(Gravity.BOTTOM|Gravity.TOP, 0, 100);
 	        }
-	        else if(state.equals("BOTTOM"))
+	        else if(state == TipToast.GRAVITY_BOTTOM)
 	        {
 	        	mToast.setGravity(Gravity.BOTTOM|Gravity.BOTTOM, 0, 100);
 	        }
-	        else if (state.equals("CENTER"))
+	        else if (state == TipToast.GRAVITY_CENTER)
 	        {
 	        	mToast.setGravity(Gravity.BOTTOM|Gravity.CENTER, 0, 100);
 	        }
-	        if(date.equals("SHORT"))
-	        {
-	        	mToast.setDuration(Toast.LENGTH_SHORT);
-	        }
-	        else if(date.equals("LONG"))
-	        {
-	        	mToast.setDuration(Toast.LENGTH_LONG);
-	        }
+
+
+	        mToast.setDuration(timeModel);
+
 	    }
 	    mToast.show();
 	}
 
 	/**
 	 * @param context  上下文
-	 * @param msg       消息
+	 * @param args     消息
 	 */
-	public static void showToast(Context context, String msg[])
+	public static void showToast(Context context, Object... args)
 	{
 		String info = "";
-		for(String s : msg){
-			info += s + "";
+		for(int i = 0; i < args.length; i++){
+			info += args[i] + "";
 		}
 		Toast.makeText(context,info, Toast.LENGTH_SHORT).show();
 	}
 
-	public static void showToast(Context context, String msg)
-	{
-		Toast.makeText(context,msg, Toast.LENGTH_SHORT).show();
-	}
-
 
 	//  TipToast.showToast(getApplicationContext(),handler,(String) msg.obj);
-
 	/**
 	 *
 	 * @param context  getApplicationContext()

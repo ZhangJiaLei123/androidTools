@@ -153,38 +153,6 @@ public class FileUtils
 	public static class Read{
 
 		/**
-		 * 读取字节
-		 * MappedByteBuffer 可以在处理大文件时，提升性能
-		 * @param filename
-		 * @return
-		 */
-		public static byte[] getBytesFormAccess(String filename){
-			FileChannel fc = null;
-			byte[] result = null;
-			try {
-				fc = new RandomAccessFile(filename, "r").getChannel();
-				MappedByteBuffer byteBuffer = fc.map(FileChannel.MapMode.READ_ONLY, 0,
-						fc.size()).load();
-				result = new byte[(int) fc.size()];
-				if (byteBuffer.remaining() > 0) {
-					// System.out.println("remain");
-					byteBuffer.get(result, 0, byteBuffer.remaining());
-				}
-				return result;
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					fc.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-
-			return result;
-		}
-
-		/**
 		 * 读取文件的字节数组
 		 * 每次读取1024字节
 		 * String imgStr = new BASE64Encoder().encode(fileByte);
@@ -242,55 +210,6 @@ public class FileUtils
 		}
 
 		/**
-		 * 从sd卡更目录开始读
-		 * @param strFilePath
-		 * @return
-		 */
-		public static String readText4SD(String strFilePath)
-		{
-			String path = strFilePath;
-			String content = ""; //文件内容字符串
-			//打开文件
-			try {
-				path = Environment.getExternalStorageDirectory().getCanonicalPath() + "/" + path;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			File file = new File(path);
-			//如果path是传递过来的参数，可以做一个非目录的判断
-			if (file.isDirectory())
-			{
-				Log.d(TAG, "The File doesn't not exist.");
-			}
-			else
-			{
-				try {
-					InputStream instream = new FileInputStream(file);
-					if (instream != null)
-					{
-						InputStreamReader inputreader = new InputStreamReader(instream);
-						BufferedReader buffreader = new BufferedReader(inputreader);
-						String line;
-						//分行读取
-						while (( line = buffreader.readLine()) != null) {
-							content += line + "\n";
-						}
-						instream.close();
-					}
-				}
-				catch (java.io.FileNotFoundException e)
-				{
-					Log.d(TAG,  "The File doesn't not exist.");
-				}
-				catch (IOException e)
-				{
-					Log.d(TAG,  "error:" + e.getMessage());
-				}
-			}
-			return content;
-		}
-
-		/**
 		 * 按行读文本
 		 * @param file
 		 * @return
@@ -301,7 +220,6 @@ public class FileUtils
 			//如果path是传递过来的参数，可以做一个非目录的判断
 			if (file.isDirectory())
 			{
-				Log.d(TAG, "The File doesn't not exist.");
 				return null;
 			}
 			try {
@@ -320,16 +238,46 @@ public class FileUtils
 			}
 			catch (java.io.FileNotFoundException e)
 			{
-				Log.d(TAG,  "The File doesn't not exist.");
 				return null;
 			}
 			catch (IOException e)
 			{
-				Log.d(TAG,  "error:" + e.getMessage());
 				return null;
 			}
 
 			return content;
+		}
+
+		/**
+		 * 读取字节
+		 * MappedByteBuffer 可以在处理大文件时，提升性能
+		 * @param filePath
+		 * @return
+		 */
+		public static byte[] getBytes4Access(String filePath){
+			FileChannel fc = null;
+			byte[] result = null;
+			try {
+				fc = new RandomAccessFile(filePath, "r").getChannel();
+				MappedByteBuffer byteBuffer = fc.map(FileChannel.MapMode.READ_ONLY, 0,
+						fc.size()).load();
+				result = new byte[(int) fc.size()];
+				if (byteBuffer.remaining() > 0) {
+					// System.out.println("remain");
+					byteBuffer.get(result, 0, byteBuffer.remaining());
+				}
+				return result;
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					fc.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			return result;
 		}
 
 		/**
@@ -412,33 +360,6 @@ public class FileUtils
 		}
 
 
-		/**
-		 * 按行读取
-		 * Read file by lines string.
-		 *
-		 * @param file the file
-		 * @return the string
-		 */
-		public static String readStrByLines(@NonNull File file) {
-			BufferedReader reader = null;
-			StringBuilder builder = new StringBuilder();
-			try {
-				reader = new BufferedReader(new FileReader(file));
-				String tempString;
-				while ((tempString = reader.readLine()) != null) {
-					builder.append(tempString);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-			} finally {
-				CloseableClose(reader);
-			}
-
-			return builder.toString();
-		}
-
-
 	}
 
 
@@ -502,7 +423,7 @@ public class FileUtils
 		 * @param filePath
 		 * @return
 		 */
-		public static String getFileNameNoFormat( String filePath){
+		public static String getNameWithoutFormat( String filePath){
 			if(filePath.isEmpty()){
 				return "";
 			}
@@ -515,7 +436,7 @@ public class FileUtils
 		 * @param fileName
 		 * @return
 		 */
-		public static String getFileFormat( String fileName )
+		public static String getFormat( String fileName )
 		{
 			if( fileName.isEmpty() )	{
 				return "";
@@ -582,6 +503,125 @@ public class FileUtils
 				fileSizeString = df.format((double) fileS / 1073741824) + "G";
 			}
 			return fileSizeString;
+		}
+
+		/**
+		 * 检查文件是否存在
+		 * @param filepath
+		 * @return
+		 */
+		public static boolean isExists(String filepath) {
+			boolean status;
+			if (!filepath.equals("")) {
+				File path = Environment.getExternalStorageDirectory();
+				File newPath = new File(path.toString() + filepath);
+				status = newPath.exists();
+			} else {
+				status = false;
+			}
+			return status;
+
+		}
+
+		/**
+		 * 复制文件
+		 * Copy file boolean.
+		 *
+		 * @param sourceFile the source file
+		 * @param targetFile the target file
+		 * @return the boolean
+		 */
+		private static boolean copyFile(@NonNull File sourceFile, @NonNull File targetFile) {
+			if (!sourceFile.exists() || targetFile.exists()) {
+				//原始文件不存在，目标文件已经存在
+				return false;
+			}
+			InputStream input = null;
+			OutputStream output = null;
+			try {
+				input = new FileInputStream(sourceFile);
+				output = new FileOutputStream(targetFile);
+				int temp;
+				while ((temp = input.read()) != (-1)) {
+					output.write(temp);
+				}
+				input.close();
+				output.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			} catch (Exception e) {
+			} finally {
+				CloseableClose(input);
+				CloseableClose(output);
+			}
+			return true;
+		}
+
+
+		/**
+		 * 删除文件
+		 * @param fileName 绝对路径
+		 * @return
+		 */
+		public static boolean delete(String fileName) {
+			boolean status;
+			SecurityManager checker = new SecurityManager();
+
+			if (!fileName.equals("")) {
+
+				File newPath = new File(fileName);
+				checker.checkDelete(newPath.toString());
+				if (newPath.isFile()) {
+					try {
+						Log.d(TAG,  "删除文件" + fileName);
+						newPath.delete();
+						status = true;
+					} catch (SecurityException se) {
+						se.printStackTrace();
+						status = false;
+					}
+				} else {
+					status = false;
+				}
+			} else {
+				status = false;
+			}
+			return status;
+		}
+
+		/**
+		 * 删除文件
+		 * Delete file boolean.
+		 *
+		 * @param file the file
+		 * @return the boolean
+		 */
+		public static boolean delete(File file) {
+			return MFolder.deleteDir(file);
+		}
+
+
+		/**
+		 * 移动文件到指定目录
+		 *
+		 * @param oldPath String  如：/test/abc.md
+		 * @param newPath String  如：/abc.md
+		 */
+		private static boolean moveFile(@NonNull File oldPath, @NonNull File newPath) {
+			if (!oldPath.isFile()) {
+				return false;
+			}
+			//如果是文件夹，这创建文件
+			if (newPath.isDirectory()) {
+				newPath = new File(newPath, oldPath.getName());
+			}
+			try {
+				return oldPath.renameTo(newPath);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
 
 
@@ -712,36 +752,6 @@ public class FileUtils
 			return status;
 		}
 
-		/**
-		 * 删除文件
-		 * @param fileName 绝对路径
-		 * @return
-		 */
-		public static boolean deleteFile(String fileName) {
-			boolean status;
-			SecurityManager checker = new SecurityManager();
-
-			if (!fileName.equals("")) {
-
-				File newPath = new File(fileName);
-				checker.checkDelete(newPath.toString());
-				if (newPath.isFile()) {
-					try {
-						Log.d(TAG,  "删除文件" + fileName);
-						newPath.delete();
-						status = true;
-					} catch (SecurityException se) {
-						se.printStackTrace();
-						status = false;
-					}
-				} else {
-					status = false;
-				}
-			} else {
-				status = false;
-			}
-			return status;
-		}
 
 		/**
 		 * 递归删除文件夹
@@ -765,6 +775,63 @@ public class FileUtils
 			return dir.delete();
 		}
 
+		/**
+		 * 复制整个文件夹
+		 * Copy folder.
+		 *
+		 * @param oldFile the old path
+		 * @param newPath the new path
+		 */
+		private static boolean copyFolder(@NonNull File oldFile, @NonNull File newPath) {
+			if (oldFile.isFile())//如果是文件，直接复制
+			{
+				return MFile.copyFile(oldFile, new File(newPath, oldFile.getName()));
+			}
+			try {//文件夹
+				newPath.mkdirs(); //如果文件夹不存在 则建立新文件夹
+				File[] temps = oldFile.listFiles();
+				File temp;
+				boolean flag = true;
+				length = temps.length;
+				for (int i = 0; i < length; i++) {
+					temp = temps[i];
+					//文件夹里面
+					if (temp.isFile()) {
+						File path = new File(newPath, oldFile.getName());
+						path.mkdirs();
+						File file = new File(path, temp.getName());
+						flag = MFile.copyFile(temp, file);
+					} else if (temp.isDirectory()) {//如果是子文件夹
+						flag = copyFolder(temp, new File(newPath + File.separator + oldFile.getName()));
+					}
+
+					if (!flag) {
+						break;
+					}
+				}
+				return flag;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+
+		}
+
+		public static boolean copyFolder(@NonNull String oldPath, @NonNull String newPath) {
+			return copyFolder(new File(oldPath), new File(newPath));
+		}
+
+		/**
+		 * 移动文件夹
+		 * Move folder.
+		 *
+		 * @param oldFile the old path
+		 * @param newPath the new path
+		 */
+		public static boolean moveFolder(@NonNull File oldFile, File newPath) {
+			return copyFolder(oldFile, newPath) && deleteDir(oldFile);
+		}
+
 	}
 
 	public static byte[] toBytes(InputStream in) throws IOException 
@@ -781,23 +848,7 @@ public class FileUtils
 	}
 
 
-	/**
-	 * 检查文件是否存在
-	 * @param name
-	 * @return
-	 */
-	public static boolean checkFileExists(String name) {
-		boolean status;
-		if (!name.equals("")) {
-			File path = Environment.getExternalStorageDirectory();
-			File newPath = new File(path.toString() + name);
-			status = newPath.exists();
-		} else {
-			status = false;
-		}
-		return status;
 
-	}
 	
 	/**
 	 * 计算SD卡的剩余空间
@@ -869,7 +920,7 @@ public class FileUtils
 	 * @return the root path
 	 * @description 获取存储路径(如果有内存卡，这是内存卡根目录，如果没有内存卡，则是软件的包file目录)
 	 */
-	public static String getRootFolder(@NonNull Context context) {
+	public static String getRootPath(@NonNull Context context) {
 		String rootPath = null;
 
 		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
@@ -888,7 +939,7 @@ public class FileUtils
 	 * @param targetFile            目标文件
 	 * @return
 	 */
-	public static boolean copyFileFromAsstes(Context context, String sourceFileName, File targetFile ){
+	public static boolean copyFile4Asstes(Context context, String sourceFileName, File targetFile ){
 		//创建解压目标目录 
 		InputStream input = null;
 		OutputStream output = null;
@@ -920,9 +971,7 @@ public class FileUtils
 		return true;
 	}
 
-	public static boolean copyFolder(@NonNull String oldPath, @NonNull String newPath) {
-		return copyFolder(new File(oldPath), new File(newPath));
-	}
+
 
 	/**
 	 * 获取文件夹大小
@@ -949,140 +998,37 @@ public class FileUtils
 		return size;
 	}
 
-	/**
-	 * 复制文件
-	 * Copy file boolean.
-	 *
-	 * @param sourceFile the source file
-	 * @param targetFile the target file
-	 * @return the boolean
-	 */
-	private static boolean copyFile(@NonNull File sourceFile, @NonNull File targetFile) {
-		if (!sourceFile.exists() || targetFile.exists()) {
-			//原始文件不存在，目标文件已经存在
-			return false;
-		}
-		InputStream input = null;
-		OutputStream output = null;
-		try {
-			input = new FileInputStream(sourceFile);
-			output = new FileOutputStream(targetFile);
-			int temp;
-			while ((temp = input.read()) != (-1)) {
-				output.write(temp);
-			}
-			input.close();
-			output.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		} catch (Exception e) {
-		} finally {
-			CloseableClose(input);
-			CloseableClose(output);
-		}
-		return true;
-	}
 
 	/**
-	 * 复制整个文件夹
-	 * Copy folder.
-	 *
-	 * @param oldFile the old path
-	 * @param newPath the new path
+	 * 移动文件或文件夹，都为文件，或者都为文件夹
+	 * @param oldFile
+	 * @param newFile
+	 * @return
 	 */
-	public static boolean copyFolder(@NonNull File oldFile, @NonNull File newPath) {
-		if (oldFile.isFile())//如果是文件，直接复制
-		{
-			return copyFile(oldFile, new File(newPath, oldFile.getName()));
+	public static boolean move(File oldFile, File newFile){
+		if(oldFile.isDirectory() && newFile.isDirectory()){
+			return MFolder.moveFolder(oldFile, newFile);
 		}
-		try {//文件夹
-			newPath.mkdirs(); //如果文件夹不存在 则建立新文件夹
-			File[] temps = oldFile.listFiles();
-			File temp;
-			boolean flag = true;
-			length = temps.length;
-			for (int i = 0; i < length; i++) {
-				temp = temps[i];
-				//文件夹里面
-				if (temp.isFile()) {
-					File path = new File(newPath, oldFile.getName());
-					path.mkdirs();
-					File file = new File(path, temp.getName());
-					flag = copyFile(temp, file);
-				} else if (temp.isDirectory()) {//如果是子文件夹
-					flag = copyFolder(temp, new File(newPath + File.separator + oldFile.getName()));
-				}
-
-				if (!flag) {
-					break;
-				}
-			}
-			return flag;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-
-	}
-
-	/**
-	 * 移动文件到指定目录
-	 *
-	 * @param oldPath String  如：/test/abc.md
-	 * @param newPath String  如：/abc.md
-	 */
-	public static boolean moveFile(@NonNull String oldPath, @NonNull String newPath) {
-		return moveFile(new File(oldPath), new File(newPath));
-	}
-
-	public static boolean moveFile(@NonNull File oldPath, @NonNull File newPath) {
-		if (!oldPath.isFile()) {
-			return false;
-		}
-		//如果是文件夹，这创建文件
-		if (newPath.isDirectory()) {
-			newPath = new File(newPath, oldPath.getName());
-		}
-		try {
-			return oldPath.renameTo(newPath);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
+		else{
+			return MFile.moveFile(oldFile, newFile);
 		}
 	}
 
 	/**
-	 * 移动文件到指定目录
-	 *
-	 * @param oldPath String
-	 * @param newPath String
+	 * 复制文件或文件夹，都为文件，或者都为文件夹
+	 * @param oldFile
+	 * @param newFile
+	 * @return
 	 */
-	public static boolean moveFolder(@NonNull String oldPath, @NonNull String newPath) {
-		return moveFolder(new File(oldPath), new File(newPath));
+	public static boolean copy(File oldFile, File newFile){
+		if(oldFile.isDirectory() && newFile.isDirectory()){
+			return MFolder.copyFolder(oldFile, newFile);
+		}
+		else{
+			return MFile.copyFile(oldFile, newFile);
+		}
 	}
 
-	/**
-	 * 移动文件夹
-	 * Move folder.
-	 *
-	 * @param oldFile the old path
-	 * @param newPath the new path
-	 */
-	public static boolean moveFolder(@NonNull File oldFile, File newPath) {
-		return copyFolder(oldFile, newPath) && deleteFile(oldFile);
-	}
-
-	/**
-	 * 删除文件
-	 * Delete file boolean.
-	 *
-	 * @param file the file
-	 * @return the boolean
-	 */
-	public static boolean deleteFile(File file) {
-		return MFolder.deleteDir(file);
-	}
 
 	public static void CloseableClose(Closeable closeable) {
 		if (closeable != null) {

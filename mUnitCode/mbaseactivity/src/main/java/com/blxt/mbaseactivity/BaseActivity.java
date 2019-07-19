@@ -62,6 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         initBaseUI();
         addOnClickListener();
         starRunData();
+        ActivityManager.getInstance().addActivity(this);
     }
 
 
@@ -125,6 +126,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+
+        if(isFinishing()) {
+            release();
+        }
+
     }
 
     //退出当前Activity时被调用,调用之后Activity就结束了
@@ -139,7 +145,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void finish(){
         super.finish();
-        release();
+
     }
 
     /**
@@ -195,6 +201,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     /** 获取权限后的操作 */
     public abstract void onPermission();
 
+    /**
+     * 返回按钮
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
     /**
      * handler消息处理
      * @param msg

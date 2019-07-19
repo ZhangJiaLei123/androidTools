@@ -11,6 +11,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.view.LayoutInflater;
 import android.view.View;
 
 
@@ -283,7 +284,22 @@ public class DialogUtil {
 //		}).create();
 //        dialog.show();
 
-
+// 自定义视图对话框
+//final View view = LayoutInflater.from(this).inflate(R.layout.dialog_input_ips,null,false);
+//	AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle("请输入IP")
+//			.setIcon(android.R.drawable.sym_def_app_icon)
+//			.setView(view)
+//			.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//				@Override
+//				public void onClick(DialogInterface dialogInterface, int i) {
+//
+//					RememberTextView etIp1 = view.findViewById(R.id.et_ip1);
+//					RememberTextView etIp2 = view.findViewById(R.id.et_ip2);
+//					RememberTextView etIp3 = view.findViewById(R.id.et_ip3);
+//					RememberTextView etIp4 = view.findViewById(R.id.et_ip4);
+//
+//				}
+//			}).setNegativeButton("取消",null).show();
 
 	//打开app应用程序信息界面
     public static void startSetting(final Activity activity, String content) {
