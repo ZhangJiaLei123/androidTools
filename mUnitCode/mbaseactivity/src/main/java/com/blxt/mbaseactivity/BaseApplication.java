@@ -149,6 +149,7 @@ public class BaseApplication extends Application {
     public void initScheduledExecutorService(int corePoolSize,int maximumPoolSize, int keepAliveTime){
         scheduledExecutorService = new ScheduledThreadPoolExecutor(corePoolSize,
                 new BasicThreadFactory.Builder().namingPattern(getPackageName() + "-schedule-pool-%d").daemon(true).build());
+
     }
 
     /**

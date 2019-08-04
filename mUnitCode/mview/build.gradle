@@ -40,7 +40,7 @@ uploadArchives {
         pom.project {
             groupId "com.bigbai.mview"
             artifactId "mview"
-            version "1.0.7"
+            version "1.0.8"
         }
     }
 }
